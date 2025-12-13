@@ -17,12 +17,7 @@ BaseType_t TaskManager_CreateTasks(void);
 /* ================== 数据获取接口 ================== */
 QueueHandle_t TaskManager_GetSensorQueue(void);
 QueueHandle_t TaskManager_GetControlQueue(void);
-SemaphoreHandle_t TaskManager_GetI2CMutex(void);
 SystemStatus_t* TaskManager_GetSystemStatus(void);
-
-/* ================== 信号量操作接口 ================== */
-void TaskManager_TakeI2CSemaphore(void);
-void TaskManager_GiveI2CSemaphore(void);
 
 /* ================== 任务函数声明 ================== */
 void Sensor_Task(void *pvParameters);

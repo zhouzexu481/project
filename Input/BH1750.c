@@ -1,6 +1,5 @@
 #include "BH1750.h"
 #include "MyI2C2.h"
-#include "task_manager.h" // <--- 再次确认这行存在
 #include "Delay.h"
 #include <math.h>
 

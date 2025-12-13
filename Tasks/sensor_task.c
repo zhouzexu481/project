@@ -6,7 +6,6 @@
 
 void Sensor_Task(void *pvParameters)
 {
-    /* 修复1: 初始化结构体，防止发送垃圾数据 */
     SensorData_t data = {0}; 
     
     TickType_t xLastWakeTime = xTaskGetTickCount();
@@ -14,30 +13,19 @@ void Sensor_Task(void *pvParameters)
 
     while(1)
     {
-        /* 获取互斥锁保护I2C总线 */
-        if(xSemaphoreTake(TaskManager_GetI2CMutex(), portMAX_DELAY) == pdTRUE)
-        {
-            /* 读取数据 */
-            /* 建议：如果库函数有返回值，这里应该判断返回值是否成功 */
-            AHT20_ReadData(&data.temperature, &data.humidity);
-            data.light_intensity = BH1750_ReadLightLevel();
-            data.air_quality = MQ135_GetPPM();
-            
-            /* 释放锁 */
-            xSemaphoreGive(TaskManager_GetI2CMutex());
-            
-            /* 修复2: 只有在成功读取数据后，才更新队列 */
-            /* 注意：配套的队列长度必须为 1 */
-            xQueueOverwrite(TaskManager_GetSensorQueue(), &data);
-            
-            // 可选调试信息
-            // printf("Sensor Update: T=%.1f H=%.1f\r\n", data.temperature, data.humidity);
-        }
-        else
-        {
-            printf("Sensor Task: I2C Mutex Timeout!\r\n");
-        }
-
+		/* 读取数据 */
+		/* 建议：如果库函数有返回值，这里应该判断返回值是否成功 */
+		AHT20_ReadData(&data.temperature, &data.humidity);
+		data.light_intensity = BH1750_ReadLightLevel();
+		data.air_quality = MQ135_GetPPM();
+		
+		/*只有在成功读取数据后，才更新队列 */
+		/* 注意：配套的队列长度必须为 1 */
+		xQueueOverwrite(TaskManager_GetSensorQueue(), &data);
+		
+		// 可选调试信息
+		// printf("Sensor Update: T=%.1f H=%.1f\r\n", data.temperature, data.humidity);
+   
         vTaskDelayUntil(&xLastWakeTime, xPeriod);
     }
 }

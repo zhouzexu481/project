@@ -4,27 +4,19 @@
 /* 私有句柄定义 */
 static QueueHandle_t xSensorQueue = NULL;
 static QueueHandle_t xControlQueue = NULL;
-static SemaphoreHandle_t xI2CMutex = NULL;
 // 初始化系统状态
 static SystemStatus_t system_status = {SYS_MODE_NORMAL, 0, 0};
 
 /* 初始化FreeRTOS对象 */
 BaseType_t TaskManager_Init(void)
 {
-    /* 1. 创建队列 */
+    /* 创建队列 */
     /* 使用 xQueueOverwrite 时，队列长度必须为 1 */
     xSensorQueue = xQueueCreate(1, sizeof(SensorData_t)); 
     xControlQueue = xQueueCreate(10, sizeof(ControlCommand_t)); 
     
     if (xSensorQueue == NULL || xControlQueue == NULL) {
         printf("Error: Queue Create Failed!\r\n");
-        return pdFAIL;
-    }
-
-    /* 2. 创建互斥量 */
-    xI2CMutex = xSemaphoreCreateMutex();
-    if (xI2CMutex == NULL) {
-        printf("Error: Mutex Create Failed!\r\n");
         return pdFAIL;
     }
 
@@ -65,13 +57,4 @@ BaseType_t TaskManager_CreateTasks(void)
 /* 接口实现保持不变 ... */
 QueueHandle_t TaskManager_GetSensorQueue(void) { return xSensorQueue; }
 QueueHandle_t TaskManager_GetControlQueue(void) { return xControlQueue; }
-SemaphoreHandle_t TaskManager_GetI2CMutex(void) { return xI2CMutex; }
 SystemStatus_t* TaskManager_GetSystemStatus(void) { return &system_status; }
-
-void TaskManager_TakeI2CSemaphore(void) {
-    if(xI2CMutex != NULL) xSemaphoreTake(xI2CMutex, portMAX_DELAY);
-}
-
-void TaskManager_GiveI2CSemaphore(void) {
-    if(xI2CMutex != NULL) xSemaphoreGive(xI2CMutex);
-}
