@@ -31,7 +31,7 @@
 .\objects\bh1750.o: .\Library\stm32f10x_wwdg.h
 .\objects\bh1750.o: .\Library\misc.h
 .\objects\bh1750.o: .\Tasks\task_manager.h
-.\objects\bh1750.o: .\hardware\config.h
+.\objects\bh1750.o: .\LowPower\config.h
 .\objects\bh1750.o: .\freertos\inc\FreeRTOS.h
 .\objects\bh1750.o: D:\keil5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\bh1750.o: .\freertos\FreeRTOSConfig.h

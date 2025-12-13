@@ -28,7 +28,7 @@
 .\objects\main.o: .\Library\stm32f10x_usart.h
 .\objects\main.o: .\Library\stm32f10x_wwdg.h
 .\objects\main.o: .\Library\misc.h
-.\objects\main.o: .\hardware\config.h
+.\objects\main.o: .\LowPower\config.h
 .\objects\main.o: .\system\Delay.h
 .\objects\main.o: .\Tasks\task_manager.h
 .\objects\main.o: .\freertos\inc\FreeRTOS.h
@@ -46,3 +46,11 @@
 .\objects\main.o: .\system\Serial.h
 .\objects\main.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: .\system\Key.h
+.\objects\main.o: .\Output\Buzzer.h
+.\objects\main.o: .\Output\PWM_Motor.h
+.\objects\main.o: .\Output\PWM_Humidifier.h
+.\objects\main.o: .\Output\PWM_LED.h
+.\objects\main.o: .\Input\MyI2C1.h
+.\objects\main.o: .\Input\MyI2C2.h
+.\objects\main.o: .\Input\AHT20.h
+.\objects\main.o: .\Input\MQ135.h

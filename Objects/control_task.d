@@ -1,6 +1,6 @@
 .\objects\control_task.o: Tasks\control_task.c
 .\objects\control_task.o: Tasks\task_manager.h
-.\objects\control_task.o: .\hardware\config.h
+.\objects\control_task.o: .\LowPower\config.h
 .\objects\control_task.o: .\Start\stm32f10x.h
 .\objects\control_task.o: .\Start\core_cm3.h
 .\objects\control_task.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -42,3 +42,8 @@
 .\objects\control_task.o: .\freertos\inc\task.h
 .\objects\control_task.o: .\freertos\inc\list.h
 .\objects\control_task.o: .\freertos\inc\semphr.h
+.\objects\control_task.o: .\Output\PWM_Motor.h
+.\objects\control_task.o: .\Output\PWM_Humidifier.h
+.\objects\control_task.o: .\Output\PWM_LED.h
+.\objects\control_task.o: .\Output\Buzzer.h
+.\objects\control_task.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h

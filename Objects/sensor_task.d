@@ -1,6 +1,6 @@
 .\objects\sensor_task.o: Tasks\sensor_task.c
 .\objects\sensor_task.o: Tasks\task_manager.h
-.\objects\sensor_task.o: .\hardware\config.h
+.\objects\sensor_task.o: .\LowPower\config.h
 .\objects\sensor_task.o: .\Start\stm32f10x.h
 .\objects\sensor_task.o: .\Start\core_cm3.h
 .\objects\sensor_task.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -42,3 +42,7 @@
 .\objects\sensor_task.o: .\freertos\inc\task.h
 .\objects\sensor_task.o: .\freertos\inc\list.h
 .\objects\sensor_task.o: .\freertos\inc\semphr.h
+.\objects\sensor_task.o: .\Input\AHT20.h
+.\objects\sensor_task.o: .\Input\BH1750.h
+.\objects\sensor_task.o: .\Input\MQ135.h
+.\objects\sensor_task.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h

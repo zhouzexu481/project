@@ -1,5 +1,5 @@
-.\objects\power_mode.o: Output\Power_Mode.c
-.\objects\power_mode.o: Output\Power_Mode.h
+.\objects\power_mode.o: LowPower\Power_Mode.c
+.\objects\power_mode.o: LowPower\Power_Mode.h
 .\objects\power_mode.o: .\Start\stm32f10x.h
 .\objects\power_mode.o: .\Start\core_cm3.h
 .\objects\power_mode.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h

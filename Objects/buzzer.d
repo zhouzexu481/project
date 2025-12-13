@@ -29,4 +29,4 @@
 .\objects\buzzer.o: .\Library\stm32f10x_wwdg.h
 .\objects\buzzer.o: .\Library\misc.h
 .\objects\buzzer.o: Output\Buzzer.h
-.\objects\buzzer.o: .\hardware\config.h
+.\objects\buzzer.o: .\LowPower\config.h

@@ -1,6 +1,6 @@
 .\objects\display_task.o: Tasks\display_task.c
 .\objects\display_task.o: Tasks\task_manager.h
-.\objects\display_task.o: .\hardware\config.h
+.\objects\display_task.o: .\LowPower\config.h
 .\objects\display_task.o: .\Start\stm32f10x.h
 .\objects\display_task.o: .\Start\core_cm3.h
 .\objects\display_task.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -44,3 +44,7 @@
 .\objects\display_task.o: .\freertos\inc\semphr.h
 .\objects\display_task.o: .\system\OLED.h
 .\objects\display_task.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\display_task.o: .\Output\PWM_Motor.h
+.\objects\display_task.o: .\Output\PWM_Humidifier.h
+.\objects\display_task.o: .\Output\PWM_LED.h
+.\objects\display_task.o: .\Output\Buzzer.h

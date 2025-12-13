@@ -1,6 +1,6 @@
 .\objects\task_manager.o: Tasks\task_manager.c
 .\objects\task_manager.o: Tasks\task_manager.h
-.\objects\task_manager.o: .\hardware\config.h
+.\objects\task_manager.o: .\LowPower\config.h
 .\objects\task_manager.o: .\Start\stm32f10x.h
 .\objects\task_manager.o: .\Start\core_cm3.h
 .\objects\task_manager.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h

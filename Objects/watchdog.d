@@ -1,4 +1,4 @@
-.\objects\watchdog.o: Hardware\Watchdog.c
+.\objects\watchdog.o: LowPower\Watchdog.c
 .\objects\watchdog.o: .\Start\stm32f10x.h
 .\objects\watchdog.o: .\Start\core_cm3.h
 .\objects\watchdog.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -28,6 +28,6 @@
 .\objects\watchdog.o: .\Library\stm32f10x_usart.h
 .\objects\watchdog.o: .\Library\stm32f10x_wwdg.h
 .\objects\watchdog.o: .\Library\misc.h
-.\objects\watchdog.o: Hardware\Watchdog.h
+.\objects\watchdog.o: LowPower\Watchdog.h
 .\objects\watchdog.o: .\system\OLED.h
 .\objects\watchdog.o: .\system\Delay.h

@@ -29,4 +29,4 @@
 .\objects\pwm_led.o: .\Library\stm32f10x_wwdg.h
 .\objects\pwm_led.o: .\Library\misc.h
 .\objects\pwm_led.o: Output\PWM_LED.h
-.\objects\pwm_led.o: .\hardware\config.h
+.\objects\pwm_led.o: .\LowPower\config.h

@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Start;.\User;.\Library;.\freertos\inc;.\freertos\port;.\freertos\src;.\freertos;.\hardware;.\system;.\Tasks</IncludePath>
+              <IncludePath>.\Start;.\User;.\Library;.\freertos\inc;.\freertos\port;.\freertos\src;.\freertos;.\LowPower;.\system;.\Tasks;.\Output;.\Input</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -883,22 +883,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Hardware</GroupName>
+          <GroupName>LowPower</GroupName>
           <Files>
+            <File>
+              <FileName>config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\LowPower\config.h</FilePath>
+            </File>
+            <File>
+              <FileName>Power_Mode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\LowPower\Power_Mode.c</FilePath>
+            </File>
+            <File>
+              <FileName>Power_Mode.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\LowPower\Power_Mode.h</FilePath>
+            </File>
             <File>
               <FileName>Watchdog.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\Watchdog.c</FilePath>
+              <FilePath>.\LowPower\Watchdog.c</FilePath>
             </File>
             <File>
               <FileName>Watchdog.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\Watchdog.h</FilePath>
-            </File>
-            <File>
-              <FileName>config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\config.h</FilePath>
+              <FilePath>.\LowPower\Watchdog.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -926,6 +936,16 @@
               <FilePath>.\Input\MQ135.h</FilePath>
             </File>
             <File>
+              <FileName>MyI2C1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Input\MyI2C1.c</FilePath>
+            </File>
+            <File>
+              <FileName>MyI2C1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Input\MyI2C1.h</FilePath>
+            </File>
+            <File>
               <FileName>AHT20.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Input\AHT20.c</FilePath>
@@ -941,14 +961,14 @@
               <FilePath>.\Input\AHT20_Reg.h</FilePath>
             </File>
             <File>
-              <FileName>MyI2C1.c</FileName>
+              <FileName>MyI2C2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Input\MyI2C1.c</FilePath>
+              <FilePath>.\Input\MyI2C2.c</FilePath>
             </File>
             <File>
-              <FileName>MyI2C1.h</FileName>
+              <FileName>MyI2C2.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Input\MyI2C1.h</FilePath>
+              <FilePath>.\Input\MyI2C2.h</FilePath>
             </File>
             <File>
               <FileName>BH1750.c</FileName>
@@ -964,16 +984,6 @@
               <FileName>BH1750_Reg.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Input\BH1750_Reg.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyI2C2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Input\MyI2C2.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyI2C2.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Input\MyI2C2.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -991,14 +1001,14 @@
               <FilePath>.\Output\Buzzer.h</FilePath>
             </File>
             <File>
-              <FileName>Power_Mode.c</FileName>
+              <FileName>PWM_Motor.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Output\Power_Mode.c</FilePath>
+              <FilePath>.\Output\PWM_Motor.c</FilePath>
             </File>
             <File>
-              <FileName>Power_Mode.h</FileName>
+              <FileName>PWM_Motor.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Output\Power_Mode.h</FilePath>
+              <FilePath>.\Output\PWM_Motor.h</FilePath>
             </File>
             <File>
               <FileName>PWM_Humidifier.c</FileName>
@@ -1019,16 +1029,6 @@
               <FileName>PWM_LED.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Output\PWM_LED.h</FilePath>
-            </File>
-            <File>
-              <FileName>PWM_Motor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Output\PWM_Motor.c</FilePath>
-            </File>
-            <File>
-              <FileName>PWM_Motor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Output\PWM_Motor.h</FilePath>
             </File>
           </Files>
         </Group>
