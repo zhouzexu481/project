@@ -24,8 +24,7 @@ static void Hardware_Init(void)
     PWM_Humidifier_Init();
     LED_PWM_Init();
     
-    /* 传感器初始化建议放在 Sensor_Task 里，或者这里初始化GPIO，任务里初始化芯片 */
-    MyI2C1_Init(); // I2C总线初始化
+    MyI2C1_Init();
     MyI2C2_Init();
     Serial_Init();
     AHT20_Init();
@@ -40,7 +39,7 @@ int main(void)
     
     printf("\r\nSystem Starting...\r\n");
     
-    /* 1. 初始化任务管理器 (创建队列、信号量) */
+    /* 1. 创建队列 */
     if(TaskManager_Init() != pdPASS) {
         printf("Task Manager Init Failed!\r\n");
         while(1);

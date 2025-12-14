@@ -13,7 +13,7 @@ typedef struct {
     PowerMode_TypeDef current_mode;
 } PowerStatus_t;
 
-/* 任务入口函数 (已修正名称，去除中间的下划线) */
+/* 任务入口函数 */
 void PowerManagement_Task(void *pvParameters);
 
 #endif

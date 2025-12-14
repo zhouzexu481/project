@@ -7,12 +7,11 @@
 #include "Serial.h"
 #include <stdio.h>
 
-/* 添加必要的驱动头文件 */
+/* 驱动头文件 */
 #include "PWM_Motor.h"
 #include "PWM_Humidifier.h"
-#include "PWM_LED.h"   // <--- 我们现在用这个控制LED
+#include "PWM_LED.h"
 #include "Buzzer.h"
-// #include "LED.h"    <--- 这行被删除了，因为文件已经不存在了
 
 static PowerStatus_t power_status = {
     .battery_voltage = 3.7f,
@@ -111,6 +110,6 @@ static void Enter_LowPowerMode(void)
     Buzzer_Off();
     Motor_Stop();
     PWM_Humidifier_Off();
-    LED_SetBrightness(0); // 使用 PWM_LED 的函数关闭 LED
+    LED_SetBrightness(0);
     PowerMode_SetMode(POWER_MODE_STOP);
 }

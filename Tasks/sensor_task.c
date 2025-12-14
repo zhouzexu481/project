@@ -14,7 +14,6 @@ void Sensor_Task(void *pvParameters)
     while(1)
     {
 		/* 读取数据 */
-		/* 建议：如果库函数有返回值，这里应该判断返回值是否成功 */
 		AHT20_ReadData(&data.temperature, &data.humidity);
 		data.light_intensity = BH1750_ReadLightLevel();
 		data.air_quality = MQ135_GetPPM();

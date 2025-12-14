@@ -1,9 +1,7 @@
-#include "Serial.h" // 包含对应的头文件以检查匹配
 #include "stm32f10x.h"
 #include <stdio.h>
 #include <stdarg.h>
 
-/* 变量定义 (分配内存) */
 char Serial_RxPacket[100];
 uint8_t Serial_RxFlag;
 
@@ -13,20 +11,20 @@ void Serial_Init(void)
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
     
     GPIO_InitTypeDef GPIO_InitStructure;
-    // TX - PA9
+    // 复用推挽输出（TX - PA9）
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
     
-    // RX - PA10
+    // 上拉输入（RX - PA10）
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
     
     USART_InitTypeDef USART_InitStruct;
-    USART_InitStruct.USART_BaudRate = 115200;
+    USART_InitStruct.USART_BaudRate = 115200; 
     USART_InitStruct.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
     USART_InitStruct.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
     USART_InitStruct.USART_Parity = USART_Parity_No;
@@ -34,12 +32,16 @@ void Serial_Init(void)
     USART_InitStruct.USART_WordLength = USART_WordLength_8b;
     USART_Init(USART1, &USART_InitStruct);
     
+    // 使能接收中断
     USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
     
+    // 已经在 main.c 中统一配置为 NVIC_PriorityGroup_4
     NVIC_InitTypeDef NVIC_InitStructure;
     NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1; // 串口优先级可以稍微高一点，防止丢包
+    // FreeRTOS中，普通外设中断优先级建议在 5-15 之间
+    // 这里设置为 7，确保安全
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 7; 
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
     NVIC_Init(&NVIC_InitStructure);
     
@@ -61,7 +63,6 @@ void Serial_SendArray(uint8_t *Array, uint16_t Length)
     }
 }
 
-// 修复：参数类型改为 char*
 void Serial_SendString(char *String)
 {
     uint8_t i;
@@ -90,12 +91,14 @@ void Serial_SendNumber(uint32_t Number, uint8_t Length)
     }
 }
 
+// 重定向 fputc
 int fputc(int ch, FILE *g)
 {
     Serial_SendByte(ch);
     return ch;
 }
 
+// 自定义 printf
 void Serial_Printf(char *format, ...)
 {
     char String[100];
@@ -104,33 +107,4 @@ void Serial_Printf(char *format, ...)
     vsprintf(String, format, arg);
     va_end(arg);
     Serial_SendString(String);
-}
-
-// 中断服务函数需要放在这里或 stm32f10x_it.c 中
-void USART1_IRQHandler(void)
-{
-    if(USART_GetITStatus(USART1, USART_IT_RXNE) == SET)
-    {
-        // static uint8_t RxState = 0; // <--- 删除这行
-        static uint8_t pRxPacket = 0;
-        
-        uint8_t RxData = USART_ReceiveData(USART1);
-        
-        /* 简易的文本接收逻辑：遇到换行符认为接收结束 */
-        if(RxData == '\r' || RxData == '\n') {
-            if(pRxPacket > 0) {
-                Serial_RxPacket[pRxPacket] = '\0'; // 添加字符串结束符
-                Serial_RxFlag = 1;                 // 置位接收标志
-                pRxPacket = 0;                     // 重置指针
-            }
-        }
-        else {
-            if(pRxPacket < 99) { // 防止缓冲区溢出
-                Serial_RxPacket[pRxPacket] = RxData;
-                pRxPacket++;
-            }
-        }
-        
-        USART_ClearITPendingBit(USART1, USART_IT_RXNE);
-    }
 }

@@ -7,7 +7,7 @@
 #define SENSOR_TASK_STACK_SIZE    256
 #define CONTROL_TASK_STACK_SIZE   128
 #define DISPLAY_TASK_STACK_SIZE   256
-#define COMM_TASK_STACK_SIZE      256
+#define COMM_TASK_STACK_SIZE      512
 #define POWER_TASK_STACK_SIZE     128
 
 /* ---------------- ”≈œ»º∂≈‰÷√ ---------------- */
