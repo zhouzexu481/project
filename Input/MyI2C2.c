@@ -23,12 +23,12 @@ uint8_t MyI2C2_R_SDA(void)
 	return BitValue;
 }
 
-void MyI2C2_Init(void)
+void MyI2C2_Init(void)//软件I2C初始化
 {
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
 	
 	GPIO_InitTypeDef GPIO_InitStructure;
- 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
+ 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;//开漏输出
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14 | GPIO_Pin_15;
  	GPIO_Init(GPIOB, &GPIO_InitStructure);
@@ -36,32 +36,52 @@ void MyI2C2_Init(void)
 	GPIO_SetBits(GPIOB, GPIO_Pin_14 | GPIO_Pin_15);
 }
 
-void MyI2C2_Start(void) { MyI2C2_W_SDA(1); MyI2C2_W_SCL(1); MyI2C2_W_SDA(0); MyI2C2_W_SCL(0); }
-void MyI2C2_Stop(void) { MyI2C2_W_SDA(0); MyI2C2_W_SCL(1); MyI2C2_W_SDA(1); }
-void MyI2C2_SendByte(uint8_t Byte) {
+void MyI2C2_Start(void) 
+{ 
+	MyI2C2_W_SDA(1);
+	MyI2C2_W_SCL(1); 
+	MyI2C2_W_SDA(0);
+	MyI2C2_W_SCL(0);
+}
+void MyI2C2_Stop(void)
+ { 
+	 MyI2C2_W_SDA(0);
+	 MyI2C2_W_SCL(1); 
+	 MyI2C2_W_SDA(1); 
+ }
+void MyI2C2_SendByte(uint8_t Byte)  //发送一个字节
+{
 	uint8_t i;
-	for(i = 0; i < 8; i++) {
+	for(i = 0; i < 8; i++) 
+	{
 		MyI2C2_W_SDA(Byte & (0x80 >> i));
 		MyI2C2_W_SCL(1);
 		MyI2C2_W_SCL(0);
 	}
 }
-uint8_t MyI2C2_ReceiveByte(void) {
+uint8_t MyI2C2_ReceiveByte(void)  //接收一个字节
+{
 	uint8_t i, Byte = 0x00;
 	MyI2C2_W_SDA(1);
-	for(i = 0; i < 8; i++) {
+	for(i = 0; i < 8; i++)
+	{
 		MyI2C2_W_SCL(1);
-		if(MyI2C2_R_SDA() == 1){Byte |= (0x80 >> i);} 
+		if(MyI2C2_R_SDA() == 1)
+		{
+			Byte |= (0x80 >> i);
+		} 
 		MyI2C2_W_SCL(0);
 	}
 	return Byte;
 }
-void MyI2C2_SendAck(uint8_t AckBit) {
+void MyI2C2_SendAck(uint8_t AckBit) //发送应答
+{
 	MyI2C2_W_SDA(AckBit);
 	MyI2C2_W_SCL(1);
 	MyI2C2_W_SCL(0);
 }
-uint8_t MyI2C2_ReceiveAck(void) {
+uint8_t MyI2C2_ReceiveAck(void) //接收应答
+{
 	uint8_t AckBit;
 	MyI2C2_W_SDA(1);
 	MyI2C2_W_SCL(1);

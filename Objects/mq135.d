@@ -30,5 +30,4 @@
 .\objects\mq135.o: .\Library\misc.h
 .\objects\mq135.o: Input\MQ135.h
 .\objects\mq135.o: Input\AD.h
-.\objects\mq135.o: .\system\Delay.h
 .\objects\mq135.o: D:\keil5\ARM\ARMCC\Bin\..\include\math.h

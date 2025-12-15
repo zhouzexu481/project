@@ -45,4 +45,5 @@
 .\objects\sensor_task.o: .\Input\AHT20.h
 .\objects\sensor_task.o: .\Input\BH1750.h
 .\objects\sensor_task.o: .\Input\MQ135.h
+.\objects\sensor_task.o: .\Input\AD.h
 .\objects\sensor_task.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h

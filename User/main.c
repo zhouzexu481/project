@@ -13,6 +13,7 @@
 #include "MyI2C1.h"
 #include "MyI2C2.h"
 #include "AHT20.h"
+#include "BH1750.h"
 #include "MQ135.h"
 
 static void Hardware_Init(void)
@@ -24,11 +25,12 @@ static void Hardware_Init(void)
     PWM_Humidifier_Init();
     LED_PWM_Init();
     
+	AD_Init();
     MyI2C1_Init();
     MyI2C2_Init();
     Serial_Init();
     AHT20_Init();
-    MQ135_Init();
+	BH1750_Init();
 }
 
 int main(void)

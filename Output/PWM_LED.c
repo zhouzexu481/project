@@ -2,7 +2,6 @@
 #include "PWM_LED.h"
 #include "config.h"
 
-// 记录当前亮度的变量
 static uint8_t current_brightness = 0;
 
 void LED_PWM_Init(void)
@@ -20,7 +19,7 @@ void LED_PWM_Init(void)
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
     
-    TIM_TimeBaseStructure.TIM_Period = 100 - 1;
+    TIM_TimeBaseStructure.TIM_Period = 100 - 1;		//TIM2里的各通道配置要相同
     TIM_TimeBaseStructure.TIM_Prescaler = 720 - 1;
     TIM_TimeBaseStructure.TIM_ClockDivision = 0;
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
@@ -39,18 +38,39 @@ void LED_PWM_Init(void)
 
 void LED_SetBrightness(uint8_t brightness)
 {
-    if(brightness > 100) brightness = 100;
-    current_brightness = brightness; // 记录状态
+    if(brightness > 100)
+	{
+		brightness = 100;
+	}
+    current_brightness = brightness;
     TIM_SetCompare4(TIM2, brightness);
 }
 
-void LED_AutoControlByLight(float light_lux) {
-    if (light_lux < LIGHT_THRESHOLD_DARK) LED_SetBrightness(100);
-    else if (light_lux < LIGHT_THRESHOLD_DIM) LED_SetBrightness(75);
-    else if (light_lux < LIGHT_THRESHOLD_NORMAL) LED_SetBrightness(50);
-    else if (light_lux < LIGHT_THRESHOLD_BRIGHT) LED_SetBrightness(25);
-    else LED_SetBrightness(0);
+void LED_AutoControlByLight(float light_lux)
+{
+    if (light_lux < LIGHT_THRESHOLD_DARK)
+	{
+		LED_SetBrightness(100);
+	}
+    else if (light_lux < LIGHT_THRESHOLD_DIM) 
+	{
+		LED_SetBrightness(75);
+	}
+    else if (light_lux < LIGHT_THRESHOLD_NORMAL)
+	{
+		LED_SetBrightness(50);
+	}
+    else if (light_lux < LIGHT_THRESHOLD_BRIGHT)
+	{
+		LED_SetBrightness(25);
+	}
+    else
+	{
+		LED_SetBrightness(0);
+	}
 }
 
-// 新增函数的实现
-uint8_t LED_GetBrightness(void) { return current_brightness; }
+uint8_t LED_GetBrightness(void)
+{
+	return current_brightness; 
+}

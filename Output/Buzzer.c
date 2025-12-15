@@ -3,7 +3,7 @@
 #include "config.h" 
 
 static uint8_t auto_mode = 1;
-static uint8_t current_state = 0; // 新增状态变量
+static uint8_t current_state = 0; // 状态变量
 
 void Buzzer_Init(void)
 {
@@ -20,8 +20,6 @@ void Buzzer_Init(void)
 
 void Buzzer_On(void)
 {
-    // 如果是高电平触发请用 SetBits，低电平触发请用 ResetBits
-    // 假设是高电平响 (根据您的 PA0 规划)
     GPIO_SetBits(BUZZER_PORT, BUZZER_PIN); 
     current_state = 1;
 }
@@ -32,18 +30,30 @@ void Buzzer_Off(void)
     current_state = 0;
 }
 
+//自动模式,根据空气质量,判断是否打开蜂鸣器
 void Buzzer_AutoControl(float air_quality)
 {
-    if (auto_mode) {
-        if (air_quality >= AIR_QUALITY_THRESHOLD) {
+    if (auto_mode)
+	{
+        if (air_quality >= AIR_QUALITY_THRESHOLD) 
+		{
             Buzzer_On();
-        } else {
+        } 
+		else 
+		{
             Buzzer_Off();
         }
     }
 }
 
-uint8_t Buzzer_GetAutoMode(void) { return auto_mode; }
+//返回当前模式状态
+uint8_t Buzzer_GetAutoMode(void) 
+{
+	return auto_mode; 
+}
 
-// 新增函数的实现
-uint8_t Buzzer_GetState(void) { return current_state; }
+//返回蜂鸣器当前状态
+uint8_t Buzzer_GetState(void) 
+{ 
+	return current_state; 
+}

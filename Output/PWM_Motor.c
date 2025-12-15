@@ -3,6 +3,7 @@
 
 static uint8_t current_speed = 0;
 
+//配置TIM2的频率为1kHz
 void Motor_Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
@@ -19,13 +20,13 @@ void Motor_Init(void)
     GPIO_Init(GPIOA, &GPIO_InitStructure);
     
     // 频率 1kHz (72M / 720 / 100)
-    TIM_TimeBaseStructure.TIM_Period = 100 - 1;
-    TIM_TimeBaseStructure.TIM_Prescaler = 720 - 1;
+    TIM_TimeBaseStructure.TIM_Period = 100 - 1;		//ARR
+    TIM_TimeBaseStructure.TIM_Prescaler = 720 - 1;	//预分频,PSC
     TIM_TimeBaseStructure.TIM_ClockDivision = 0;
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
     TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
     
-    // TIM2 Channel 2
+    // TIM2 Channel 2,PA1引脚
     TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
     TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
     TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
@@ -41,18 +42,40 @@ void Motor_Init(void)
 
 void Motor_SetSpeed(uint8_t Speed)
 {
-    if (Speed > 100) Speed = 100;
+    if (Speed > 100) 
+	{
+		Speed = 100;
+	}
     current_speed = Speed;
-    TIM_SetCompare2(TIM2, Speed);
+    TIM_SetCompare2(TIM2, Speed);	//2通道,TIM2
 }
 
-void Motor_Stop(void) { Motor_SetSpeed(0); }
-uint8_t Get_Motor_Speed(void) { return current_speed; }
+void Motor_Stop(void)
+{
+	Motor_SetSpeed(0);
+}
+
+uint8_t Get_Motor_Speed(void)
+{
+	return current_speed;
+}
 
 void Motor_TemperatureControl(float temperature)
 {
-    if (temperature > 35.0f) Motor_SetSpeed(100);
-    else if (temperature > 30.0f) Motor_SetSpeed(60);
-    else if (temperature > 25.0f) Motor_SetSpeed(30);
-    else Motor_Stop();
+    if (temperature > 35.0f)
+	{
+		Motor_SetSpeed(100);
+	}
+    else if (temperature > 30.0f) 
+	{
+		Motor_SetSpeed(60);
+	}
+    else if (temperature > 25.0f)
+	{
+		Motor_SetSpeed(30);
+	}
+    else
+	{
+		Motor_Stop();
+	}
 }
