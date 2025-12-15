@@ -27,7 +27,7 @@ void Control_Task(void *pvParameters)
             }
         }
 
-        /* 2. 自动控制逻辑 (有最新数据就执行，没有就跳过) */
+        /* 2. 自动控制逻辑 */
         // 参数3设为0：只看一眼，绝不等待，防止卡顿
         if(xQueuePeek(TaskManager_GetSensorQueue(), &data, 0) == pdPASS)
         {

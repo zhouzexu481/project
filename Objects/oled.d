@@ -30,3 +30,4 @@
 .\objects\oled.o: .\Library\misc.h
 .\objects\oled.o: system\OLED_Font.h
 .\objects\oled.o: system\Delay.h
+.\objects\oled.o: system\OLED.h

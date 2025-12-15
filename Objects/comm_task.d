@@ -43,7 +43,7 @@
 .\objects\comm_task.o: .\freertos\inc\task.h
 .\objects\comm_task.o: .\freertos\inc\list.h
 .\objects\comm_task.o: .\freertos\inc\semphr.h
-.\objects\comm_task.o: .\system\Serial.h
+.\objects\comm_task.o: .\system\serial.h
 .\objects\comm_task.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\comm_task.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\comm_task.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdlib.h

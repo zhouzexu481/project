@@ -1,100 +1,111 @@
 #include "comm_task.h"
 #include "task_manager.h"
-#include "FreeRTOS.h"
-#include "task.h"
-#include "queue.h"
-#include "Serial.h"
+#include "serial.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-/**********************************************************
- * @brief  通信任务
- **********************************************************/
+/* 私有函数声明 (只在本文件内部使用) */
+static void Process_Command(char *cmd_str);
+static void Show_Help(void);
+
+/**
+ * @brief  通信主任务
+ * 1. 处理串口收到的指令
+ * 2. 定时向串口打印传感器数据
+ */
 void Comm_Task(void *pvParameters)
 {
-    SensorData_t sensor_data;
+    SensorData_t data;
     
-    printf("Comm task started!\r\n");
+    printf("System Started! Waiting for commands...\r\n");
     
-    while(1) {
-        /* 检查是否有接收标志 */
-        if(Serial_RxFlag == 1) {
-            Serial_RxFlag = 0;
-            /* 处理接收到的命令 */
-            Process_SerialCommand(Serial_RxPacket);
+    while(1) 
+    {
+        /* 1. 检查有没有收到串口数据 */
+        if(Serial_RxFlag == 1) 
+        {
+            Serial_RxFlag = 0; // 清除标志位，防止重复处理
+            Process_Command(Serial_RxPacket); // 处理这条命令
         }
         
-        /* 检查是否需要发送数据 */
-        if(xQueuePeek(TaskManager_GetSensorQueue(), &sensor_data, 0) == pdPASS) {
-            /* 修复警告: air_quality 是 float 类型，使用 %.0f 打印 (或者强转为 int) */
-            printf("[Data] Temp:%.1f C, Hum:%.1f %%, Light:%.1f Lux, Air:%.0f PPM\r\n", 
-                   sensor_data.temperature, 
-                   sensor_data.humidity, 
-                   sensor_data.light_intensity, 
-                   sensor_data.air_quality);
+        /* 2. 定时发送传感器数据 (Peek模式: 查看数据但不取走, 方便Display任务也用) */
+        if(xQueuePeek(TaskManager_GetSensorQueue(), &data, 0) == pdPASS) 
+        {
+            // 格式化打印：%.1f 表示保留1位小数
+            printf("[Status] T:%.1fC  H:%.1f%%  Lux:%.0f  Air:%.0f\r\n", 
+                   data.temperature, 
+                   data.humidity, 
+                   data.light_intensity, 
+                   data.air_quality);
         }
         
-        vTaskDelay(pdMS_TO_TICKS(1000)); // 建议改为 1000ms，避免串口刷屏过快
+        // 延时 1000ms，也就是说每秒打印一次数据
+        vTaskDelay(pdMS_TO_TICKS(1000)); 
     }
 }
 
-/**********************************************************
- * @brief  处理串口命令
- **********************************************************/
-static void Process_SerialCommand(char *cmd)
+/**
+ * @brief  处理串口文本命令
+ * 原理: 将字符串 "LED 100" 切割成 "LED" 和 "100"
+ */
+static void Process_Command(char *cmd_str)
 {
-    ControlCommand_t control_cmd; 
-    char *token;
-    
-    printf("Received command: %s\r\n", cmd);
-    
-    /* 解析命令 */
-    token = strtok(cmd, " ");
-    
-    if(token != NULL) {
-        if(strcmp(token, "LED") == 0) {
-            token = strtok(NULL, " ");
-            if(token != NULL) {
-                control_cmd.cmd_type = CMD_LED_CONTROL;
-                control_cmd.param1 = atoi(token);
-                xQueueSend(TaskManager_GetControlQueue(), &control_cmd, 0);
-            }
-        }
-        else if(strcmp(token, "MOTOR") == 0) {
-            token = strtok(NULL, " ");
-            if(token != NULL) {
-                control_cmd.cmd_type = CMD_MOTOR_CONTROL;
-                control_cmd.param1 = atoi(token);
-                xQueueSend(TaskManager_GetControlQueue(), &control_cmd, 0);
-            }
-        }
-        else if(strcmp(token, "MODE") == 0) {
-            token = strtok(NULL, " ");
-            if(token != NULL) {
-                control_cmd.cmd_type = CMD_SYSTEM_MODE;
-                control_cmd.param1 = atoi(token);
-                xQueueSend(TaskManager_GetControlQueue(), &control_cmd, 0);
-            }
-        }
-        else if(strcmp(token, "HELP") == 0) {
-            Show_HelpInfo();
-        }
-        else if(strcmp(token, "STATUS") == 0) {
-            printf("Use display task to show system status.\r\n");
-        }
-        else {
-            printf("Unknown command. Type HELP for help.\r\n");
-        }
+    ControlCommand_t ctrl_cmd;
+    char *name = NULL;  // 命令名 (如 "LED")
+    char *val_str = NULL; // 数值字符串 (如 "100")
+    int val = 0;
+
+    printf("CMD Recv: %s\r\n", cmd_str); // 回显收到的命令
+
+    /* 第一步: 获取命令名字 (以空格为分隔符) */
+    name = strtok(cmd_str, " ");
+    if (name == NULL) return; //如果是空命令，直接退出
+
+    /* 第二步: 获取数值参数 */
+    val_str = strtok(NULL, " "); 
+    if (val_str != NULL) {
+        val = atoi(val_str); // 把字符串 "100" 转成数字 100
+    }
+
+    /* 第三步: 匹配命令并发送到控制队列 */
+    if (strcmp(name, "LED") == 0) 
+    {
+        ctrl_cmd.cmd_type = CMD_LED_CONTROL;
+        ctrl_cmd.param1 = val;
+        xQueueSend(TaskManager_GetControlQueue(), &ctrl_cmd, 0);
+        printf("-> Set LED to %d\r\n", val);
+    }
+    else if (strcmp(name, "MOTOR") == 0) 
+    {
+        ctrl_cmd.cmd_type = CMD_MOTOR_CONTROL;
+        ctrl_cmd.param1 = val;
+        xQueueSend(TaskManager_GetControlQueue(), &ctrl_cmd, 0);
+        printf("-> Set Fan to %d\r\n", val);
+    }
+    else if (strcmp(name, "MODE") == 0) 
+    {
+        ctrl_cmd.cmd_type = CMD_SYSTEM_MODE;
+        ctrl_cmd.param1 = val;
+        xQueueSend(TaskManager_GetControlQueue(), &ctrl_cmd, 0);
+        printf("-> Set Mode to %d\r\n", val);
+    }
+    else if (strcmp(name, "HELP") == 0) 
+    {
+        Show_Help();
+    }
+    else 
+    {
+        printf("Error: Unknown Command!\r\n");
     }
 }
 
-static void Show_HelpInfo(void)
+/* 打印帮助信息 */
+static void Show_Help(void)
 {
-    printf("\r\nAvailable commands:\r\n");
-    printf("LED <0-100>     - Set LED brightness\r\n");
-    printf("MOTOR <0-100>   - Set motor speed\r\n");
-    printf("MODE <0-3>      - Set system mode\r\n");
-    printf("HELP            - Show this help\r\n");
-    printf("STATUS          - Show system status\r\n");
+    printf("\r\n=== Command List ===\r\n");
+    printf("1. LED <0-100>    (e.g., LED 50)\r\n");
+    printf("2. MOTOR <0-100>  (e.g., MOTOR 80)\r\n");
+    printf("3. MODE <0-3>     (0:Auto, 1:Manual)\r\n");
+    printf("====================\r\n");
 }

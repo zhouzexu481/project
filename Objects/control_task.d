@@ -46,4 +46,3 @@
 .\objects\control_task.o: .\Output\PWM_Humidifier.h
 .\objects\control_task.o: .\Output\PWM_LED.h
 .\objects\control_task.o: .\Output\Buzzer.h
-.\objects\control_task.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h

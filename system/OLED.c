@@ -1,296 +1,172 @@
 #include "stm32f10x.h"
 #include "OLED_Font.h"
-#include "Delay.h" 
+#include "Delay.h"
+#include "OLED.h"
 
-/* * 接线说明 (根据你的描述):
- * OLED_GND -> PB6 (需要软件输出低电平)
- * OLED_VCC -> PB7 (需要软件输出高电平)
- * OLED_SCL -> PB8
- * OLED_SDA -> PB9
+/* * 硬件接线映射:
+ * GND -> PB6 (软件输出低电平供电)
+ * VCC -> PB7 (软件输出高电平供电)
+ * SCL -> PB8 (时钟线)
+ * SDA -> PB9 (数据线)
  */
 
-/* 引脚写操作函数 (带延时，确保时序稳定) */
-void OLED_W_SCL(uint8_t x)
-{
-    GPIO_WriteBit(GPIOB, GPIO_Pin_8, (BitAction)(x));
-    Delay_us(2); // 延时防止时序过快
-}
+/* ================= 1. 底层通信部分 (模拟 I2C) ================= */
 
-void OLED_W_SDA(uint8_t x)
-{
-    GPIO_WriteBit(GPIOB, GPIO_Pin_9, (BitAction)(x));
-    Delay_us(2);
-}
+/* 写引脚电平，封装一下方便阅读 */
+void OLED_W_SCL(uint8_t x) { GPIO_WriteBit(GPIOB, GPIO_Pin_8, (BitAction)x); }
+void OLED_W_SDA(uint8_t x) { GPIO_WriteBit(GPIOB, GPIO_Pin_9, (BitAction)x); }
 
-/* OLED GPIO 初始化函数 */
-void OLED_I2C_Init(void)
-{
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
-	
-	GPIO_InitTypeDef GPIO_InitStructure;
-    
-    /* ============================================== */
-    /* 1. 配置电源引脚: PB6(GND) 和 PB7(VCC)          */
-    /* ============================================== */
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // 推挽输出 (供电必须用推挽)
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7;
- 	GPIO_Init(GPIOB, &GPIO_InitStructure);
-    
-    /* 设置电平: PB6输出0(GND), PB7输出1(VCC) */
-    GPIO_ResetBits(GPIOB, GPIO_Pin_6); // GND
-    GPIO_SetBits(GPIOB, GPIO_Pin_7);   // VCC
-    
-    /* 稍微延时等待 OLED 上电稳定 */
-    Delay_ms(20);
-
-    /* ============================================== */
-    /* 2. 配置通信引脚: PB8(SCL) 和 PB9(SDA)          */
-    /* ============================================== */
- 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // 推挽输出
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9;
- 	GPIO_Init(GPIOB, &GPIO_InitStructure);
-	
-    /* I2C 总线空闲状态为高 */
-	OLED_W_SCL(1);
-	OLED_W_SDA(1);
-}
-
-/**
-  * @brief  I2C开始
-  */
+/* I2C 起始信号: SCL高电平时，SDA从高变低 */
 void OLED_I2C_Start(void)
 {
-	OLED_W_SDA(1);
-	OLED_W_SCL(1);
-	OLED_W_SDA(0);
-	OLED_W_SCL(0);
+    OLED_W_SDA(1); OLED_W_SCL(1);
+    OLED_W_SDA(0); OLED_W_SCL(0);
 }
 
-/**
-  * @brief  I2C停止
-  */
+/* I2C 停止信号: SCL高电平时，SDA从低变高 */
 void OLED_I2C_Stop(void)
 {
-	OLED_W_SDA(0);
-	OLED_W_SCL(1);
-	OLED_W_SDA(1);
+    OLED_W_SDA(0); OLED_W_SCL(1);
+    OLED_W_SDA(1);
 }
 
-/**
-  * @brief  I2C发送一个字节
-  */
+/* 发送一个字节数据 */
 void OLED_I2C_SendByte(uint8_t Byte)
 {
-	uint8_t i;
-	for (i = 0; i < 8; i++)
-	{
-		OLED_W_SDA(!!(Byte & (0x80 >> i)));
-		OLED_W_SCL(1);
-		OLED_W_SCL(0);
-	}
-	OLED_W_SCL(1);	//额外的一个时钟，不处理应答信号
-	OLED_W_SCL(0);
+    uint8_t i;
+    for (i = 0; i < 8; i++)
+    {
+        // 依次取出字节的每一位发送
+        OLED_W_SDA(!!(Byte & (0x80 >> i)));
+        OLED_W_SCL(1); // 拉高SCL读取
+        OLED_W_SCL(0); // 拉低SCL准备下一位
+    }
+    // 发送完后需要忽略一个应答位(ACK)
+    OLED_W_SCL(1);
+    OLED_W_SCL(0);
 }
 
-/**
-  * @brief  OLED写命令
-  */
+/* 写命令 (Command): 用于设置屏幕参数 */
 void OLED_WriteCommand(uint8_t Command)
 {
-	OLED_I2C_Start();
-	OLED_I2C_SendByte(0x78);		//从机地址
-	OLED_I2C_SendByte(0x00);		//写命令
-	OLED_I2C_SendByte(Command); 
-	OLED_I2C_Stop();
+    OLED_I2C_Start();
+    OLED_I2C_SendByte(0x78); // OLED地址
+    OLED_I2C_SendByte(0x00); // 0x00 表示后面发的是命令
+    OLED_I2C_SendByte(Command);
+    OLED_I2C_Stop();
 }
 
-/**
-  * @brief  OLED写数据
-  */
+/* 写数据 (Data): 用于点亮屏幕像素 */
 void OLED_WriteData(uint8_t Data)
 {
-	OLED_I2C_Start();
-	OLED_I2C_SendByte(0x78);		//从机地址
-	OLED_I2C_SendByte(0x40);		//写数据
-	OLED_I2C_SendByte(Data);
-	OLED_I2C_Stop();
+    OLED_I2C_Start();
+    OLED_I2C_SendByte(0x78);
+    OLED_I2C_SendByte(0x40); // 0x40 表示后面发的是显示数据
+    OLED_I2C_SendByte(Data);
+    OLED_I2C_Stop();
 }
 
-/**
-  * @brief  OLED设置光标位置
-  */
-void OLED_SetCursor(uint8_t Y, uint8_t X)
-{
-	OLED_WriteCommand(0xB0 | Y);					//设置Y位置
-	OLED_WriteCommand(0x10 | ((X & 0xF0) >> 4));	//设置X位置高4位
-	OLED_WriteCommand(0x00 | (X & 0x0F));			//设置X位置低4位
-}
+/* ================= 2. 功能应用部分 ================= */
 
-/**
-  * @brief  OLED清屏
-  */
-void OLED_Clear(void)
-{  
-	uint8_t i, j;
-	for (j = 0; j < 8; j++)
-	{
-		OLED_SetCursor(j, 0);
-		for(i = 0; i < 128; i++)
-		{
-			OLED_WriteData(0x00);
-		}
-	}
-}
-
-/**
-  * @brief  OLED显示一个字符
-  */
-void OLED_ShowChar(uint8_t Line, uint8_t Column, char Char)
-{      	
-	uint8_t i;
-	OLED_SetCursor((Line - 1) * 2, (Column - 1) * 8);		//设置光标位置在上半部分
-	for (i = 0; i < 8; i++)
-	{
-		OLED_WriteData(OLED_F8x16[Char - ' '][i]);			//显示上半部分内容
-	}
-	OLED_SetCursor((Line - 1) * 2 + 1, (Column - 1) * 8);	//设置光标位置在下半部分
-	for (i = 0; i < 8; i++)
-	{
-		OLED_WriteData(OLED_F8x16[Char - ' '][i + 8]);		//显示下半部分内容
-	}
-}
-
-/**
-  * @brief  OLED显示字符串
-  */
-void OLED_ShowString(uint8_t Line, uint8_t Column, char *String)
-{
-	uint8_t i;
-	for (i = 0; String[i] != '\0'; i++)
-	{
-		OLED_ShowChar(Line, Column + i, String[i]);
-	}
-}
-
-/**
-  * @brief  OLED次方函数
-  */
-uint32_t OLED_Pow(uint32_t X, uint32_t Y)
-{
-	uint32_t Result = 1;
-	while (Y--)
-	{
-		Result *= X;
-	}
-	return Result;
-}
-
-/**
-  * @brief  OLED显示数字（十进制，正数）
-  */
-void OLED_ShowNum(uint8_t Line, uint8_t Column, uint32_t Number, uint8_t Length)
-{
-	uint8_t i;
-	for (i = 0; i < Length; i++)							
-	{
-		OLED_ShowChar(Line, Column + i, Number / OLED_Pow(10, Length - i - 1) % 10 + '0');
-	}
-}
-
-/**
-  * @brief  OLED显示数字（十进制，带符号数）
-  */
-void OLED_ShowSignedNum(uint8_t Line, uint8_t Column, int32_t Number, uint8_t Length)
-{
-	uint8_t i;
-	uint32_t Number1;
-	if (Number >= 0)
-	{
-		OLED_ShowChar(Line, Column, '+');
-		Number1 = Number;
-	}
-	else
-	{
-		OLED_ShowChar(Line, Column, '-');
-		Number1 = -Number;
-	}
-	for (i = 0; i < Length; i++)							
-	{
-		OLED_ShowChar(Line, Column + i + 1, Number1 / OLED_Pow(10, Length - i - 1) % 10 + '0');
-	}
-}
-
-/**
-  * @brief  OLED显示数字（十六进制，正数）
-  */
-void OLED_ShowHexNum(uint8_t Line, uint8_t Column, uint32_t Number, uint8_t Length)
-{
-	uint8_t i, SingleNumber;
-	for (i = 0; i < Length; i++)							
-	{
-		SingleNumber = Number / OLED_Pow(16, Length - i - 1) % 16;
-		if (SingleNumber < 10)
-		{
-			OLED_ShowChar(Line, Column + i, SingleNumber + '0');
-		}
-		else
-		{
-			OLED_ShowChar(Line, Column + i, SingleNumber - 10 + 'A');
-		}
-	}
-}
-
-/**
-  * @brief  OLED显示数字（二进制，正数）
-  */
-void OLED_ShowBinNum(uint8_t Line, uint8_t Column, uint32_t Number, uint8_t Length)
-{
-	uint8_t i;
-	for (i = 0; i < Length; i++)							
-	{
-		OLED_ShowChar(Line, Column + i, Number / OLED_Pow(2, Length - i - 1) % 2 + '0');
-	}
-}
-
-/**
-  * @brief  OLED初始化
-  */
+/* 屏幕初始化 (只需调用一次) */
 void OLED_Init(void)
 {
-	uint32_t i, j;
-	
-	for (i = 0; i < 1000; i++)			//上电延时
-	{
-		for (j = 0; j < 1000; j++);
-	}
-	
-	OLED_I2C_Init();			// 端口初始化 (包含电源配置)
-	
-	OLED_WriteCommand(0xAE);	//关闭显示
-	OLED_WriteCommand(0xD5);	//设置显示时钟分频比/振荡器频率
-	OLED_WriteCommand(0x80);
-	OLED_WriteCommand(0xA8);	//设置多路复用率
-	OLED_WriteCommand(0x3F);
-	OLED_WriteCommand(0xD3);	//设置显示偏移
-	OLED_WriteCommand(0x00);
-	OLED_WriteCommand(0x40);	//设置显示开始行
-	OLED_WriteCommand(0xA1);	//设置左右方向，0xA1正常 0xA0左右反置
-	OLED_WriteCommand(0xC8);	//设置上下方向，0xC8正常 0xC0上下反置
-	OLED_WriteCommand(0xDA);	//设置COM引脚硬件配置
-	OLED_WriteCommand(0x12);
-	OLED_WriteCommand(0x81);	//设置对比度控制
-	OLED_WriteCommand(0xCF);
-	OLED_WriteCommand(0xD9);	//设置预充电周期
-	OLED_WriteCommand(0xF1);
-	OLED_WriteCommand(0xDB);	//设置VCOMH取消选择级别
-	OLED_WriteCommand(0x30);
-	OLED_WriteCommand(0xA4);	//设置整个显示打开/关闭
-	OLED_WriteCommand(0xA6);	//设置正常/倒转显示
-	OLED_WriteCommand(0x8D);	//设置充电泵
-	OLED_WriteCommand(0x14);
-	OLED_WriteCommand(0xAF);	//开启显示
-		
-	OLED_Clear();				//OLED清屏
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+    
+    GPIO_InitTypeDef GPIO_InitStructure;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; // 推挽输出
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    
+    // 一次性初始化 PB6, PB7, PB8, PB9
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;
+    GPIO_Init(GPIOB, &GPIO_InitStructure);
+    
+    // 配置供电引脚: PB6(GND)=0, PB7(VCC)=1
+    GPIO_ResetBits(GPIOB, GPIO_Pin_6);
+    GPIO_SetBits(GPIOB, GPIO_Pin_7);
+    
+    // 默认拉高通信线
+    OLED_W_SCL(1);
+    OLED_W_SDA(1);
+    
+    Delay_ms(20); // 等待屏幕上电稳定
+
+    // --- 下面是一串标准的OLED启动命令，不需要背，照抄即可 ---
+    OLED_WriteCommand(0xAE); // 关闭显示
+    OLED_WriteCommand(0xD5); OLED_WriteCommand(0x80);
+    OLED_WriteCommand(0xA8); OLED_WriteCommand(0x3F);
+    OLED_WriteCommand(0xD3); OLED_WriteCommand(0x00);
+    OLED_WriteCommand(0x40);
+    OLED_WriteCommand(0xA1); // 左右方向正常
+    OLED_WriteCommand(0xC8); // 上下方向正常
+    OLED_WriteCommand(0xDA); OLED_WriteCommand(0x12);
+    OLED_WriteCommand(0x81); OLED_WriteCommand(0xCF);
+    OLED_WriteCommand(0xD9); OLED_WriteCommand(0xF1);
+    OLED_WriteCommand(0xDB); OLED_WriteCommand(0x30);
+    OLED_WriteCommand(0xA4);
+    OLED_WriteCommand(0xA6);
+    OLED_WriteCommand(0x8D); OLED_WriteCommand(0x14); // 打开电荷泵(必须)
+    OLED_WriteCommand(0xAF); // 开启显示
+    
+    OLED_Clear();
+}
+
+/* 设置光标位置 (Y: 行 0-7, X: 列 0-127) */
+void OLED_SetCursor(uint8_t Y, uint8_t X)
+{
+    OLED_WriteCommand(0xB0 | Y);                 // 设置页地址(行)
+    OLED_WriteCommand(0x10 | ((X & 0xF0) >> 4)); // 设置列高4位
+    OLED_WriteCommand(0x00 | (X & 0x0F));        // 设置列低4位
+}
+
+/* 清屏 */
+void OLED_Clear(void)
+{
+    uint8_t i, j;
+    for (j = 0; j < 8; j++) {
+        OLED_SetCursor(j, 0);
+        for(i = 0; i < 128; i++) OLED_WriteData(0x00);
+    }
+}
+
+/* 显示一个字符 */
+void OLED_ShowChar(uint8_t Line, uint8_t Column, char Char)
+{
+    uint8_t i;
+    // 字体是 8x16 像素，所以要分上下两半显示
+    // 上半部分
+    OLED_SetCursor((Line - 1) * 2, (Column - 1) * 8);
+    for (i = 0; i < 8; i++) OLED_WriteData(OLED_F8x16[Char - ' '][i]);
+    
+    // 下半部分
+    OLED_SetCursor((Line - 1) * 2 + 1, (Column - 1) * 8);
+    for (i = 0; i < 8; i++) OLED_WriteData(OLED_F8x16[Char - ' '][i + 8]);
+}
+
+/* 显示字符串 (最常用) */
+void OLED_ShowString(uint8_t Line, uint8_t Column, char *String)
+{
+    uint8_t i;
+    for (i = 0; String[i] != '\0'; i++)
+    {
+        OLED_ShowChar(Line, Column + i, String[i]);
+    }
+}
+
+/* 显示正整数 (简化版，去掉了Pow函数) */
+void OLED_ShowNum(uint8_t Line, uint8_t Column, uint32_t Number, uint8_t Length)
+{
+    uint8_t i;
+    // 倒着计算每一位，太麻烦，这里用一种简单的递推法提取每一位
+    // 为了简化代码，建议直接用 sprintf 配合 ShowString，但这里保留基本实现
+    
+    // 这是一个简单的提取算法：先算除数
+    uint32_t Divisor = 1;
+    for(i = 1; i < Length; i++) Divisor *= 10;
+
+    for (i = 0; i < Length; i++)
+    {
+        OLED_ShowChar(Line, Column + i, (Number / Divisor) % 10 + '0');
+        Divisor /= 10;
+    }
 }

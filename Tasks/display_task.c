@@ -18,7 +18,7 @@ void Display_Task(void *pvParameters)
     
     while(1)
     {
-        /* 获取传感器数据 (Peek 不删除，因为 Comm_Task 也要用) */
+        /* 获取传感器数据 */
         if(xQueuePeek(TaskManager_GetSensorQueue(), &data, 0) == pdPASS)
         {
             // === 第一行: 空气质量 & 蜂鸣器 ===
@@ -51,13 +51,12 @@ void Display_Task(void *pvParameters)
             sprintf(str_buf, "Hum:%4.1f", data.humidity);
             OLED_ShowString(3, 1, str_buf);
             
-            // 右: Mis:100 (Mis=Mist/加湿)
+            // 右: Mis:100
             sprintf(str_buf, "Mis:%3d", PWM_Humidifier_GetCurrentDuty());
             OLED_ShowString(3, 10, str_buf);
             
             // === 第四行: 光照 & LED ===
-            // 左: Lux:1234 (如果数值很大可能显示不下，用 %.0f)
-            // 如果光照可能超过9999，建议用 "Lx:%4.0f"
+            // 左: Lux:1234
             sprintf(str_buf, "Lux:%4.0f", data.light_intensity);
             OLED_ShowString(4, 1, str_buf);
             
