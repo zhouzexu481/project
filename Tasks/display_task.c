@@ -16,8 +16,6 @@ void Display_Task(void *pvParameters)
     OLED_Init();
     OLED_Clear();
     
-    // 显示静态标签(可选，这里直接动态刷新)
-    
     while(1)
     {
         /* 获取传感器数据 (Peek 不删除，因为 Comm_Task 也要用) */
@@ -29,8 +27,14 @@ void Display_Task(void *pvParameters)
             OLED_ShowString(1, 1, str_buf);
             
             // 右: Bz:ON / OFF
-            if(Buzzer_GetState()) sprintf(str_buf, "Bz:ON ");
-            else                  sprintf(str_buf, "Bz:OFF");
+            if(Buzzer_GetState())
+			{
+				sprintf(str_buf, "Bz:ON ");
+			}
+            else
+			{
+				sprintf(str_buf, "Bz:OFF");
+			}
             OLED_ShowString(1, 10, str_buf); // 第10列开始显示右边 (10*8=80像素位置)
 
             // === 第二行: 温度 & 风扇 ===
