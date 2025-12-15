@@ -1,5 +1,6 @@
 .\objects\bh1750.o: Input\BH1750.c
 .\objects\bh1750.o: Input\BH1750.h
+.\objects\bh1750.o: Input\BH1750_Reg.h
 .\objects\bh1750.o: Input\MyI2C2.h
 .\objects\bh1750.o: .\Start\stm32f10x.h
 .\objects\bh1750.o: .\Start\core_cm3.h

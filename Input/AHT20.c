@@ -47,7 +47,7 @@ uint8_t AHT20_ReadData(float *Temperature, float *Humidity)
 	Delay_ms(80);
 	
 	MyI2C1_Start();
-	MyI2C1_SendByte(AHT20_READ_ADDRESS);
+	MyI2C1_SendByte(AHT20_READ_ADDRESS);	//∑¢ÀÕ∂¡µÿ÷∑
 	MyI2C1_ReceiveAck();
 	
 	for(i = 0; i < AHT20_DATA_LENGTH; i++) {
