@@ -17,11 +17,26 @@ void Control_Task(void *pvParameters)
             switch(cmd.cmd_type)
             {
                 case CMD_LED_CONTROL:
-					LED_SetBrightness((uint8_t)cmd.param1); 
+					LED_SetBrightness((uint8_t)cmd.param); 
 				break;
 				
                 case CMD_MOTOR_CONTROL:
-					Motor_SetSpeed((uint8_t)cmd.param1);
+					Motor_SetSpeed((uint8_t)cmd.param);
+				break;
+				
+				case CMD_HUMIDIFIER_CONTROL:
+					PWM_Humidifier_SetDutyCycle((uint8_t)cmd.param);
+				break;
+
+				case CMD_BUZZER_CONTROL:
+				if(cmd.param > 0) 
+				{
+					Buzzer_On();
+				}
+				else 
+				{
+					Buzzer_Off();
+				}
 				break;
                 // ... 其他命令加在这里
             }
@@ -32,7 +47,7 @@ void Control_Task(void *pvParameters)
         if(xQueuePeek(TaskManager_GetSensorQueue(), &data, 0) == pdPASS)
         {
             // 如果系统处于正常模式，执行自动控制
-            if(TaskManager_GetSystemStatus()->current_mode == SYS_MODE_NORMAL) 
+            if( *TaskManager_GetSystemMode() == SYS_MODE_AUTO)
             {
                 Motor_TemperatureControl(data.temperature);      // 温控风扇
                 PWM_Humidifier_AutoControl(data.humidity);       // 湿控加湿

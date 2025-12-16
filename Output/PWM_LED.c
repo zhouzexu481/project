@@ -48,19 +48,19 @@ void LED_SetBrightness(uint8_t brightness)
 
 void LED_AutoControlByLight(float light_lux)
 {
-    if (light_lux < LIGHT_THRESHOLD_DARK)
+    if (light_lux < 10.0f)
 	{
 		LED_SetBrightness(100);
 	}
-    else if (light_lux < LIGHT_THRESHOLD_DIM) 
+    else if (light_lux < 50.0f) 
 	{
 		LED_SetBrightness(75);
 	}
-    else if (light_lux < LIGHT_THRESHOLD_NORMAL)
+    else if (light_lux < 200.0f)
 	{
 		LED_SetBrightness(50);
 	}
-    else if (light_lux < LIGHT_THRESHOLD_BRIGHT)
+    else if (light_lux < 500.0f)
 	{
 		LED_SetBrightness(25);
 	}

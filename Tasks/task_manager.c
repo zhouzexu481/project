@@ -6,8 +6,9 @@
 /* 私有句柄定义 */
 static QueueHandle_t xSensorQueue = NULL;
 static QueueHandle_t xControlQueue = NULL;
+
 // 初始化系统状态
-static SystemStatus_t system_status = {SYS_MODE_NORMAL, 0, 0};
+static SystemMode_t current_mode = SYS_MODE_AUTO;
 
 /* 初始化FreeRTOS对象 */
 BaseType_t TaskManager_Init(void)
@@ -48,10 +49,6 @@ BaseType_t TaskManager_CreateTasks(void)
     xReturn = xTaskCreate(Comm_Task, "CommTask", COMM_TASK_STACK_SIZE, NULL, COMM_TASK_PRIORITY, NULL);
     if(xReturn != pdPASS) return pdFAIL;
 
-    /* 电源管理任务 */
-    xReturn = xTaskCreate(PowerManagement_Task, "PowerTask", POWER_TASK_STACK_SIZE, NULL, POWER_TASK_PRIORITY, NULL);
-    if(xReturn != pdPASS) return pdFAIL;
-
     printf("All Tasks Created Successfully!\r\n");
     return pdPASS;
 }
@@ -59,4 +56,4 @@ BaseType_t TaskManager_CreateTasks(void)
 /* 接口实现保持不变 ... */
 QueueHandle_t TaskManager_GetSensorQueue(void) { return xSensorQueue; }
 QueueHandle_t TaskManager_GetControlQueue(void) { return xControlQueue; }
-SystemStatus_t* TaskManager_GetSystemStatus(void) { return &system_status; }
+SystemMode_t* TaskManager_GetSystemMode(void) { return &current_mode; }

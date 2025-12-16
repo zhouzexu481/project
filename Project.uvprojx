@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Start;.\User;.\Library;.\freertos\inc;.\freertos\port;.\freertos\src;.\freertos;.\LowPower;.\system;.\Tasks;.\Output;.\Input</IncludePath>
+              <IncludePath>.\Start;.\User;.\Library;.\freertos\inc;.\freertos\port;.\freertos\src;.\freertos;.\system;.\Tasks;.\Output;.\Input</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -883,36 +883,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>LowPower</GroupName>
-          <Files>
-            <File>
-              <FileName>config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\LowPower\config.h</FilePath>
-            </File>
-            <File>
-              <FileName>Power_Mode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\LowPower\Power_Mode.c</FilePath>
-            </File>
-            <File>
-              <FileName>Power_Mode.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\LowPower\Power_Mode.h</FilePath>
-            </File>
-            <File>
-              <FileName>Watchdog.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\LowPower\Watchdog.c</FilePath>
-            </File>
-            <File>
-              <FileName>Watchdog.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\LowPower\Watchdog.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>Input</GroupName>
           <Files>
             <File>
@@ -1036,6 +1006,11 @@
           <GroupName>Tasks</GroupName>
           <Files>
             <File>
+              <FileName>config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Tasks\config.h</FilePath>
+            </File>
+            <File>
               <FileName>task_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Tasks\task_manager.c</FilePath>
@@ -1084,16 +1059,6 @@
               <FileName>comm_task.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Tasks\comm_task.h</FilePath>
-            </File>
-            <File>
-              <FileName>power_management.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Tasks\power_management.c</FilePath>
-            </File>
-            <File>
-              <FileName>power_management.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Tasks\power_management.h</FilePath>
             </File>
           </Files>
         </Group>

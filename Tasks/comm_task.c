@@ -69,31 +69,54 @@ static void Process_Command(char *cmd_str)
     }
 
     /* 第三步: 匹配命令并发送到控制队列 */
-    if (strcmp(name, "LED") == 0) 
+	/* 1. 加湿器指令 (例如: MIST 50) */
+    if (strcmp(name, "MIST") == 0) 
+    {
+        ctrl_cmd.cmd_type = CMD_HUMIDIFIER_CONTROL;
+        ctrl_cmd.param = val; // 0-100
+        xQueueSend(TaskManager_GetControlQueue(), &ctrl_cmd, 0);
+        printf("-> Set Mist to %d\r\n", val);
+    }
+    /* 2. 蜂鸣器指令 (例如: BUZZ 1 或 BUZZ 0) */
+    else if (strcmp(name, "BUZZ") == 0) 
+    {
+        ctrl_cmd.cmd_type = CMD_BUZZER_CONTROL;
+        ctrl_cmd.param = val; // 0 或 1
+        xQueueSend(TaskManager_GetControlQueue(), &ctrl_cmd, 0);
+        printf("-> Set Buzzer to %s\r\n", val ? "ON" : "OFF");
+    }
+	/* 3. LED灯光指令匹配 (格式: LED <0-100>) */
+    else if (strcmp(name, "LED") == 0) 
     {
         ctrl_cmd.cmd_type = CMD_LED_CONTROL;
-        ctrl_cmd.param1 = val;
+        ctrl_cmd.param = val;
         xQueueSend(TaskManager_GetControlQueue(), &ctrl_cmd, 0);
         printf("-> Set LED to %d\r\n", val);
     }
+	/* 4. 风扇电机指令匹配 (格式: MOTOR <0-100>) */
     else if (strcmp(name, "MOTOR") == 0) 
     {
         ctrl_cmd.cmd_type = CMD_MOTOR_CONTROL;
-        ctrl_cmd.param1 = val;
+        ctrl_cmd.param = val;
         xQueueSend(TaskManager_GetControlQueue(), &ctrl_cmd, 0);
         printf("-> Set Fan to %d\r\n", val);
     }
+	/* 5. 系统模式指令匹配 (格式: MODE <0/1>) */
+	/* 0: 自动模式, 1: 手动模式 */
     else if (strcmp(name, "MODE") == 0) 
     {
         ctrl_cmd.cmd_type = CMD_SYSTEM_MODE;
-        ctrl_cmd.param1 = val;
+        ctrl_cmd.param = val;
         xQueueSend(TaskManager_GetControlQueue(), &ctrl_cmd, 0);
         printf("-> Set Mode to %d\r\n", val);
     }
+	/* 6. 帮助指令匹配 (格式: HELP) */
     else if (strcmp(name, "HELP") == 0) 
     {
         Show_Help();
     }
+	/* 7. 未知指令处理 */
+	/* 如果前面所有的 if 都没匹配上，说明用户发了一个我不认识的词 */
     else 
     {
         printf("Error: Unknown Command!\r\n");
@@ -104,8 +127,10 @@ static void Process_Command(char *cmd_str)
 static void Show_Help(void)
 {
     printf("\r\n=== Command List ===\r\n");
-    printf("1. LED <0-100>    (e.g., LED 50)\r\n");
-    printf("2. MOTOR <0-100>  (e.g., MOTOR 80)\r\n");
-    printf("3. MODE <0-3>     (0:Auto, 1:Manual)\r\n");
+    printf("1. LED <0-100>    (e.g., LED 50)\r\n");		//LED
+    printf("2. MOTOR <0-100>  (e.g., MOTOR 80)\r\n");	//风扇
+	printf("3. MIST <0-100>   (e.g., MIST 60)\r\n");  // 加湿器
+    printf("4. BUZZ <0/1>     (e.g., BUZZ 1)\r\n");   // 蜂鸣器
+    printf("5. MODE <0/1>     (0:Auto, 1:Manual)\r\n");
     printf("====================\r\n");
 }

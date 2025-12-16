@@ -28,7 +28,7 @@
 .\objects\main.o: .\Library\stm32f10x_usart.h
 .\objects\main.o: .\Library\stm32f10x_wwdg.h
 .\objects\main.o: .\Library\misc.h
-.\objects\main.o: .\LowPower\config.h
+.\objects\main.o: .\Tasks\config.h
 .\objects\main.o: .\system\Delay.h
 .\objects\main.o: .\Tasks\task_manager.h
 .\objects\main.o: .\freertos\inc\FreeRTOS.h

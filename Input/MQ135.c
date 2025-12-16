@@ -9,7 +9,7 @@
 #define MQ135_PARA_A        116.602f     // 曲线系数 A
 #define MQ135_PARA_B        -2.769f      // 曲线指数 B
 
-//获取PPM浓度
+//获取PPM浓度,10 ~ 1000+
 uint16_t MQ135_GetPPM(void)
 {
     uint16_t ad_value;
@@ -32,7 +32,10 @@ uint16_t MQ135_GetPPM(void)
     ppm = MQ135_PARA_A * pow(ratio, MQ135_PARA_B); // 算出 PPM
     
     /* 5. 结果限幅 */
-    if(ppm > 5000) ppm = 5000;
+    if(ppm > 1000) 
+	{
+		ppm = 1000;
+	}
     
     return (uint16_t)ppm;
 }

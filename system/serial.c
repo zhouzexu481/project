@@ -108,3 +108,71 @@ void Serial_Printf(char *format, ...)
     va_end(arg);
     Serial_SendString(String);
 }
+
+/*功能：接收文本数据包 (以 \r\n 或 \n 结尾的字符串)
+   状态机逻辑：
+     状态0：接收字符，存入缓冲
+     状态1：收到 \r (可选)
+     状态2：收到 \n -> 封包完成
+*/
+void USART1_IRQHandler(void)
+{
+    static uint8_t RxState = 0;       // 状态变量
+    static uint8_t pRxPacket = 0;     // 缓冲区索引
+    uint8_t Res;
+
+    // 检查是否是接收中断
+    if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
+    {
+        // 1. 读取当前字节
+        Res = USART_ReceiveData(USART1);
+        
+        // 2. 状态机处理 (读取字符串，直到遇到换行)
+        if(RxState == 0)
+        {
+            // 如果收到回车 '\r'，进入状态1 (等待 '\n')
+            // 如果你的串口助手只发送 '\n'，可以简化这个逻辑
+            if(Res == '\r')
+            {
+                RxState = 1;
+            }
+            // 如果直接收到 '\n' (部分工具只有换行)，直接完成
+            else if(Res == '\n')
+            {
+                Serial_RxPacket[pRxPacket] = '\0'; // 字符串结束符
+                Serial_RxFlag = 1;                 // 【关键】置标志位
+                pRxPacket = 0;                     // 复位索引
+                RxState = 0;                       // 复位状态
+            }
+            else
+            {
+                // 正常字符，存入缓冲区
+                Serial_RxPacket[pRxPacket] = Res;
+                pRxPacket++;
+                
+                // 防止缓冲区溢出
+                if(pRxPacket >= 100) pRxPacket = 0; 
+            }
+        }
+        else if(RxState == 1)
+        {
+            // 期待收到 '\n'
+            if(Res == '\n')
+            {
+                Serial_RxPacket[pRxPacket] = '\0'; // 添加字符串结束符(很重要)
+                Serial_RxFlag = 1;                 // 【关键】置标志位
+                pRxPacket = 0;                     // 复位索引
+                RxState = 0;                       // 复位状态
+            }
+            else
+            {
+                // 如果 '\r' 后面不是 '\n'，说明之前的 '\r' 只是普通字符？
+                // 这种容错处理看情况，这里简单复位
+                RxState = 0;
+            }
+        }
+        
+        // 清除中断标志 (读取DR其实已经自动清除，但手动清除更保险)
+        USART_ClearITPendingBit(USART1, USART_IT_RXNE);
+    }
+}

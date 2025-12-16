@@ -1,6 +1,6 @@
 .\objects\display_task.o: Tasks\display_task.c
 .\objects\display_task.o: Tasks\task_manager.h
-.\objects\display_task.o: .\LowPower\config.h
+.\objects\display_task.o: Tasks\config.h
 .\objects\display_task.o: .\Start\stm32f10x.h
 .\objects\display_task.o: .\Start\core_cm3.h
 .\objects\display_task.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h

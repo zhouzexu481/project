@@ -44,9 +44,9 @@
 .\objects\power_management.o: .\freertos\inc\task.h
 .\objects\power_management.o: .\freertos\inc\list.h
 .\objects\power_management.o: .\freertos\inc\semphr.h
-.\objects\power_management.o: .\system\Serial.h
-.\objects\power_management.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\power_management.o: .\Output\PWM_Motor.h
 .\objects\power_management.o: .\Output\PWM_Humidifier.h
 .\objects\power_management.o: .\Output\PWM_LED.h
 .\objects\power_management.o: .\Output\Buzzer.h
+.\objects\power_management.o: .\system\serial.h
+.\objects\power_management.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h

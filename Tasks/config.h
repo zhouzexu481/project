@@ -8,39 +8,27 @@
 #define CONTROL_TASK_STACK_SIZE   128
 #define DISPLAY_TASK_STACK_SIZE   256
 #define COMM_TASK_STACK_SIZE      512
-#define POWER_TASK_STACK_SIZE     128
 
 /* ---------------- 优先级配置 ---------------- */
 #define CONTROL_TASK_PRIORITY     4
 #define SENSOR_TASK_PRIORITY      3
 #define COMM_TASK_PRIORITY        2
 #define DISPLAY_TASK_PRIORITY     2
-#define POWER_TASK_PRIORITY       1
 
 /* ---------------- 硬件引脚定义 ---------------- */
 // 蜂鸣器: PA0
 #define BUZZER_PIN                GPIO_Pin_0
 #define BUZZER_PORT               GPIOA
 
-/* ---------------- 阈值定义 -------------------- */
-#define AIR_QUALITY_THRESHOLD     100
-#define TEMP_THRESHOLD_LOW        20.0f
-#define TEMP_THRESHOLD_HIGH       30.0f
-#define HUMI_THRESHOLD_LOW        40.0f
-#define HUMI_THRESHOLD_HIGH       70.0f
-
-#define LIGHT_THRESHOLD_DARK      10.0f
-#define LIGHT_THRESHOLD_DIM       50.0f
-#define LIGHT_THRESHOLD_NORMAL    200.0f
-#define LIGHT_THRESHOLD_BRIGHT    500.0f
-
 /* ---------------- 类型定义 ---------------- */
+
+/* 系统模式：0-自动(正常), 1-手动 */
 typedef enum {
-    SYS_MODE_NORMAL = 0,
-    SYS_MODE_SLEEP,
-    SYS_MODE_EMERGENCY
+    SYS_MODE_AUTO = 0,
+    SYS_MODE_MANUAL = 1,
 } SystemMode_t;
 
+/* 控制命令类型 */
 typedef enum {
     CMD_LED_CONTROL = 0,
     CMD_MOTOR_CONTROL,
@@ -49,22 +37,18 @@ typedef enum {
     CMD_SYSTEM_MODE
 } ControlCommandType_t;
 
+/* 命令结构体 */
 typedef struct {
-    ControlCommandType_t cmd_type;
-    int32_t param1;
+    ControlCommandType_t cmd_type;	//存入命令
+    int32_t param;					//参数
 } ControlCommand_t;
 
+/* 传感器数据结构体 */
 typedef struct {
     float temperature;
     float humidity;
     float light_intensity;
     float air_quality;
 } SensorData_t;
-
-typedef struct {
-    SystemMode_t current_mode;
-    uint32_t error_code;
-    uint32_t uptime_sec;
-} SystemStatus_t;
 
 #endif

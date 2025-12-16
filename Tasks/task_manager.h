@@ -24,6 +24,5 @@ void Sensor_Task(void *pvParameters);
 void Control_Task(void *pvParameters);
 void Display_Task(void *pvParameters);
 void Comm_Task(void *pvParameters);
-void PowerManagement_Task(void *pvParameters);
 
 #endif
