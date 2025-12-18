@@ -1,29 +1,65 @@
-#include "stm32f10x.h"
 #include "Delay.h"
+#include "stm32f10x.h"
+#include "FreeRTOS.h"
+#include "task.h"
 
-static uint8_t  fac_us=0;
+static uint16_t g_fac_us = 0;
 
-void Delay_Init(void)
+extern void xPortSysTickHandler(void);
+
+void SysTick_Init(uint16_t sysclk)
 {
-    // SystemCoreClock 在 system_stm32f10x.c 中定义
-    fac_us = SystemCoreClock / 8000000;
+    uint32_t reload;
+
+    SysTick->CTRL &= ~(1 << 2);
+    
+    g_fac_us = sysclk / 8;
+    
+    reload = sysclk / 8;            
+    reload *= 1000000 / configTICK_RATE_HZ; 
+    
+    SysTick->CTRL |= 1 << 1;
+    SysTick->LOAD = reload;
+    SysTick->CTRL |= 1 << 0;
 }
 
-void Delay_us(uint32_t nus)
+void Delay_us(uint32_t xus)
 {
-    uint32_t i;
-    for(i=0; i<nus; i++)
+    uint32_t ticks;
+    uint32_t told, tnow, tcnt = 0;
+    uint32_t reload = SysTick->LOAD;
+
+    ticks = xus * g_fac_us;
+    told = SysTick->VAL;
+
+    while (1)
     {
-        /* === 修改点: 添加 volatile 防止编译器优化掉延时 === */
-        volatile uint8_t j = fac_us;
-        while(j--);
+        tnow = SysTick->VAL;
+        
+        if (tnow != told)
+        {
+            if (tnow < told)
+            {
+                tcnt += told - tnow;
+            }
+            else
+            {
+                tcnt += reload - tnow + told;
+            }
+            
+            told = tnow;
+
+            if (tcnt >= ticks)
+            {
+                break;
+            }
+        }
     }
 }
 
-void Delay_ms(uint32_t nms)
+void Delay_ms(uint32_t xms)
 {
-    uint32_t i;
-    for(i=0; i<nms; i++)
+    while (xms--)
     {
         Delay_us(1000);
     }
@@ -31,8 +67,16 @@ void Delay_ms(uint32_t nms)
 
 void Delay_s(uint32_t xs)
 {
-    while(xs--)
+    while (xs--)
     {
         Delay_ms(1000);
+    }
+}
+
+void SysTick_Handler(void)
+{
+    if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED)
+    {
+        xPortSysTickHandler();
     }
 }

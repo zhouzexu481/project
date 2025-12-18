@@ -18,7 +18,6 @@
 
 static void Hardware_Init(void)
 {
-    Delay_Init(); // 务必先初始化
     Key_Init();
     Buzzer_Init();
     Motor_Init();
@@ -36,7 +35,8 @@ static void Hardware_Init(void)
 int main(void)
 {
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
-    
+    SysTick_Init(72);       /* 滴答定时器初始化，带中断 */
+
     Hardware_Init();
     
     printf("\r\nSystem Starting...\r\n");

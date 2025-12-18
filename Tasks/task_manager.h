@@ -17,7 +17,7 @@ BaseType_t TaskManager_CreateTasks(void);
 /* ================== 数据获取接口 ================== */
 QueueHandle_t TaskManager_GetSensorQueue(void);
 QueueHandle_t TaskManager_GetControlQueue(void);
-SystemStatus_t* TaskManager_GetSystemStatus(void);
+SystemMode_t* TaskManager_GetSystemMode(void);
 
 /* ================== 任务函数声明 ================== */
 void Sensor_Task(void *pvParameters);

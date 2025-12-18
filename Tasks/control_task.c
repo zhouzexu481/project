@@ -38,6 +38,11 @@ void Control_Task(void *pvParameters)
 					Buzzer_Off();
 				}
 				break;
+				
+				case CMD_SYSTEM_MODE:
+                    /* 读取指针，修改当前模式的值 */
+                    *TaskManager_GetSystemMode() = (SystemMode_t)cmd.param;
+                break;
                 // ... 其他命令加在这里
             }
         }

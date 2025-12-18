@@ -70,7 +70,7 @@ static void Process_Command(char *cmd_str)
 
     /* 第三步: 匹配命令并发送到控制队列 */
 	/* 1. 加湿器指令 (例如: MIST 50) */
-    if (strcmp(name, "MIST") == 0) 
+    if (strcmp(name, "MIST") == 0) 	//比较两个字符串是否一致
     {
         ctrl_cmd.cmd_type = CMD_HUMIDIFIER_CONTROL;
         ctrl_cmd.param = val; // 0-100

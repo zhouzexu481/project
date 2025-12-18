@@ -14,20 +14,33 @@ void Key_Init(void)
 
 uint8_t Key_GetNum(void)
 {
-	uint8_t	KeyNum=0;
-	if( GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_1)==0)
-	{
-		vTaskDelay(pdMS_TO_TICKS(20));
-		while( GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_1)==0)
-		KeyNum=1;
-		vTaskDelay(pdMS_TO_TICKS(20));
-	}
-	if( GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_11)==0)
-	{
-		vTaskDelay(pdMS_TO_TICKS(20));
-		while( GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_11)==0)
-		KeyNum=2;
-		vTaskDelay(pdMS_TO_TICKS(20));
-	}
-	return KeyNum;
+    uint8_t KeyNum = 0;
+    if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_1) == 0)
+    {
+        vTaskDelay(pdMS_TO_TICKS(20)); // 消抖
+        
+        if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_1) == 0)
+        {
+            KeyNum = 1; 
+            while (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_1) == 0)
+            {
+                vTaskDelay(pdMS_TO_TICKS(10)); 
+            }
+        }
+    }
+    
+    if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11) == 0)
+    {
+        vTaskDelay(pdMS_TO_TICKS(20));
+        if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11) == 0)
+        {
+            KeyNum = 2;
+            while (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11) == 0)
+            {
+                vTaskDelay(pdMS_TO_TICKS(10));
+            }
+        }
+    }
+    
+    return KeyNum;
 }

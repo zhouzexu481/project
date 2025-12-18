@@ -27,37 +27,16 @@ Project File Date:  12/15/2025
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\keil5\ARM\ARMCC\Bin'
 Build target 'Target 1'
-compiling PWM_LED.c...
-compiling Buzzer.c...
-compiling task_manager.c...
-Tasks\task_manager.h(20): error:  #20: identifier "SystemStatus_t" is undefined
-  SystemStatus_t* TaskManager_GetSystemStatus(void);
-Tasks\task_manager.c: 0 warnings, 1 error
-compiling display_task.c...
-Tasks\task_manager.h(20): error:  #20: identifier "SystemStatus_t" is undefined
-  SystemStatus_t* TaskManager_GetSystemStatus(void);
-Tasks\display_task.c: 0 warnings, 1 error
-compiling control_task.c...
-Tasks\task_manager.h(20): error:  #20: identifier "SystemStatus_t" is undefined
-  SystemStatus_t* TaskManager_GetSystemStatus(void);
-Tasks\control_task.c(50): warning:  #223-D: function "TaskManager_GetSystemMode" declared implicitly
-              if( *TaskManager_GetSystemMode() == SYS_MODE_AUTO)
-Tasks\control_task.c(50): error:  #75: operand of "*" must be a pointer
-              if( *TaskManager_GetSystemMode() == SYS_MODE_AUTO)
-Tasks\control_task.c: 1 warning, 2 errors
-compiling comm_task.c...
-Tasks\task_manager.h(20): error:  #20: identifier "SystemStatus_t" is undefined
-  SystemStatus_t* TaskManager_GetSystemStatus(void);
-Tasks\comm_task.c: 0 warnings, 1 error
+compiling AHT20.c...
+compiling BH1750.c...
+compiling MyI2C1.c...
+compiling MyI2C2.c...
+compiling OLED.c...
+compiling Delay.c...
 compiling main.c...
-.\Tasks\task_manager.h(20): error:  #20: identifier "SystemStatus_t" is undefined
-  SystemStatus_t* TaskManager_GetSystemStatus(void);
-User\main.c: 0 warnings, 1 error
-compiling sensor_task.c...
-Tasks\task_manager.h(20): error:  #20: identifier "SystemStatus_t" is undefined
-  SystemStatus_t* TaskManager_GetSystemStatus(void);
-Tasks\sensor_task.c: 0 warnings, 1 error
-".\Objects\Project.axf" - 7 Error(s), 1 Warning(s).
+linking...
+Program Size: Code=23276 RO-data=2068 RW-data=172 ZI-data=11628  
+".\Objects\Project.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -71,8 +50,7 @@ Package Vendor: Keil
   D:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include
 
 <h2>Collection of Component Files used:</h2>
-Target not created.
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>
