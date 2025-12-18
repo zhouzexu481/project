@@ -20,13 +20,13 @@ void Buzzer_Init(void)
 
 void Buzzer_On(void)
 {
-    GPIO_SetBits(BUZZER_PORT, BUZZER_PIN); 
+    GPIO_ResetBits(BUZZER_PORT, BUZZER_PIN); // 修改为低电平触发
     current_state = 1;
 }
 
 void Buzzer_Off(void)
 {
-    GPIO_ResetBits(BUZZER_PORT, BUZZER_PIN);
+    GPIO_SetBits(BUZZER_PORT, BUZZER_PIN); // 修改为高电平关闭
     current_state = 0;
 }
 

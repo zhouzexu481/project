@@ -649,9 +649,9 @@ Section Cross References
     buzzer.o(i.Buzzer_Init) refers to stm32f10x_rcc.o(i.RCC_APB2PeriphClockCmd) for RCC_APB2PeriphClockCmd
     buzzer.o(i.Buzzer_Init) refers to stm32f10x_gpio.o(i.GPIO_Init) for GPIO_Init
     buzzer.o(i.Buzzer_Init) refers to buzzer.o(i.Buzzer_Off) for Buzzer_Off
-    buzzer.o(i.Buzzer_Off) refers to stm32f10x_gpio.o(i.GPIO_ResetBits) for GPIO_ResetBits
+    buzzer.o(i.Buzzer_Off) refers to stm32f10x_gpio.o(i.GPIO_SetBits) for GPIO_SetBits
     buzzer.o(i.Buzzer_Off) refers to buzzer.o(.data) for current_state
-    buzzer.o(i.Buzzer_On) refers to stm32f10x_gpio.o(i.GPIO_SetBits) for GPIO_SetBits
+    buzzer.o(i.Buzzer_On) refers to stm32f10x_gpio.o(i.GPIO_ResetBits) for GPIO_ResetBits
     buzzer.o(i.Buzzer_On) refers to buzzer.o(.data) for current_state
     pwm_motor.o(i.Get_Motor_Speed) refers to pwm_motor.o(.data) for current_speed
     pwm_motor.o(i.Motor_Init) refers to stm32f10x_rcc.o(i.RCC_APB2PeriphClockCmd) for RCC_APB2PeriphClockCmd
