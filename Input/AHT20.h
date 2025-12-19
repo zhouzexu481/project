@@ -5,5 +5,5 @@
 
 void AHT20_Init(void);
 uint8_t AHT20_ReadData(float *Temperature, float *Humidity);
-
+void AHT20_Check(void);
 #endif

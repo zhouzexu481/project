@@ -28,6 +28,7 @@
 .\objects\aht20.o: .\Library\stm32f10x_usart.h
 .\objects\aht20.o: .\Library\stm32f10x_wwdg.h
 .\objects\aht20.o: .\Library\misc.h
+.\objects\aht20.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\aht20.o: Input\MyI2C1.h
 .\objects\aht20.o: Input\AHT20_Reg.h
 .\objects\aht20.o: .\system\Delay.h

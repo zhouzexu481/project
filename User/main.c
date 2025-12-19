@@ -30,6 +30,7 @@ static void Hardware_Init(void)
     Serial_Init();
     AHT20_Init();
 	BH1750_Init();
+	AHT20_Check();
 }
 
 int main(void)
