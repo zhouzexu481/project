@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Fri Dec 19 17:47:59 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Fri Dec 19 19:40:29 2025
 <BR><P>
 <H3>Maximum Stack Usage =        320 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -429,7 +429,6 @@ Global Symbols
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AHT20_ReadData
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ135_GetData_PPM
 <LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Display_Task
-<LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Control_Task
 <LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Comm_Task
 </UL>
 
@@ -807,7 +806,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> task_manager.o(i.TaskManager_CreateTasks)
 </UL>
-<P><STRONG><a name="[39]"></a>Control_Task</STRONG> (Thumb, 178 bytes, Stack size 24 bytes, control_task.o(i.Control_Task))
+<P><STRONG><a name="[39]"></a>Control_Task</STRONG> (Thumb, 160 bytes, Stack size 24 bytes, control_task.o(i.Control_Task))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = Control_Task &rArr; xQueueReceive &rArr; vTaskPlaceOnEventList &rArr; prvAddCurrentTaskToDelayedList &rArr; vListInsert
 </UL>
 <BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueReceive
@@ -815,9 +814,7 @@ Global Symbols
 <LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Buzzer_On
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Buzzer_Off
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Buzzer_AutoControl
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
-<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskManager_GetSystemMode
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskManager_GetSensorQueue
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskManager_GetControlQueue
@@ -1692,7 +1689,6 @@ Global Symbols
 <LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Show_Help
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Process_Command
-<LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Control_Task
 <LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Comm_Task
 </UL>
 
