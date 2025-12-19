@@ -1,16 +1,17 @@
 #include "stm32f10x.h"
+#include "AD.h"
 
 void AD_Init(void)
 {
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
     
-    RCC_ADCCLKConfig(RCC_PCLK2_Div6); // 72M/6 = 12MHz
+    RCC_ADCCLKConfig(RCC_PCLK2_Div6); 
     
     GPIO_InitTypeDef GPIO_InitStructure;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN; // 模拟输入
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7; // PA7
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7; // 使用 PA7
     GPIO_Init(GPIOA, &GPIO_InitStructure);
     
     // 规则组通道配置: ADC1, 通道7 (PA7), 序列1, 采样时间

@@ -803,8 +803,7 @@ I (.\Input\MyI2C1.h)(0x693F722C)
 I (.\Input\MyI2C2.h)(0x693F722D)
 I (.\Input\AHT20.h)(0x694417C5)
 I (.\Input\BH1750.h)(0x69378B26)
-I (.\Input\MQ135.h)(0x693FC80F)
-I (.\Input\AD.h)(0x692824B1)
+I (.\Input\MQ135.h)(0x6944BDA2)
 F (.\User\stm32f10x_conf.h)(0x4D99A59E)()
 F (.\User\stm32f10x_it.c)(0x67C8544A)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\freertos\inc -I .\freertos\port -I .\freertos\src -I .\freertos -I .\system -I .\Tasks -I .\Output -I .\Input-I.\RTE\_Target_1-ID:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\keil5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\stm32f10x_it.o --omf_browse .\objects\stm32f10x_it.crf --depend .\objects\stm32f10x_it.d)
 I (User\stm32f10x_it.h)(0x4D99A59E)
@@ -1146,7 +1145,7 @@ I (.\Library\misc.h)(0x4D783BB4)
 I (D:\keil5\ARM\ARMCC\include\stdio.h)(0x588B8344)
 I (D:\keil5\ARM\ARMCC\include\stdarg.h)(0x588B8344)
 F (.\system\serial.h)(0x6943F331)()
-F (.\Input\AD.c)(0x693D210C)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\freertos\inc -I .\freertos\port -I .\freertos\src -I .\freertos -I .\system -I .\Tasks -I .\Output -I .\Input-I.\RTE\_Target_1-ID:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\keil5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\ad.o --omf_browse .\objects\ad.crf --depend .\objects\ad.d)
+F (.\Input\AD.c)(0x6944BD8A)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\freertos\inc -I .\freertos\port -I .\freertos\src -I .\freertos -I .\system -I .\Tasks -I .\Output -I .\Input-I.\RTE\_Target_1-ID:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\keil5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\ad.o --omf_browse .\objects\ad.crf --depend .\objects\ad.d)
 I (.\Start\stm32f10x.h)(0x4D783CB4)
 I (.\Start\core_cm3.h)(0x4D523B58)
 I (D:\keil5\ARM\ARMCC\include\stdint.h)(0x588B8344)
@@ -1175,40 +1174,42 @@ I (.\Library\stm32f10x_tim.h)(0x4D783BB4)
 I (.\Library\stm32f10x_usart.h)(0x4D783BB4)
 I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
 I (.\Library\misc.h)(0x4D783BB4)
-F (.\Input\AD.h)(0x692824B1)()
-F (.\Input\MQ135.c)(0x6944ABAA)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\freertos\inc -I .\freertos\port -I .\freertos\src -I .\freertos -I .\system -I .\Tasks -I .\Output -I .\Input-I.\RTE\_Target_1-ID:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\keil5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\mq135.o --omf_browse .\objects\mq135.crf --depend .\objects\mq135.d)
-I (.\Start\stm32f10x.h)(0x4D783CB4)
-I (.\Start\core_cm3.h)(0x4D523B58)
-I (D:\keil5\ARM\ARMCC\include\stdint.h)(0x588B8344)
-I (.\Start\system_stm32f10x.h)(0x4D783CAA)
-I (.\User\stm32f10x_conf.h)(0x4D99A59E)
-I (.\Library\stm32f10x_adc.h)(0x4D783BB4)
-I (.\Library\stm32f10x_bkp.h)(0x4D783BB4)
-I (.\Library\stm32f10x_can.h)(0x4D783BB4)
-I (.\Library\stm32f10x_cec.h)(0x4D783BB4)
-I (.\Library\stm32f10x_crc.h)(0x4D783BB4)
-I (.\Library\stm32f10x_dac.h)(0x4D783BB4)
-I (.\Library\stm32f10x_dbgmcu.h)(0x4D783BB4)
-I (.\Library\stm32f10x_dma.h)(0x4D783BB4)
-I (.\Library\stm32f10x_exti.h)(0x4D783BB4)
-I (.\Library\stm32f10x_flash.h)(0x4D783BB4)
-I (.\Library\stm32f10x_fsmc.h)(0x4D783BB4)
-I (.\Library\stm32f10x_gpio.h)(0x4D783BB4)
-I (.\Library\stm32f10x_i2c.h)(0x4D783BB4)
-I (.\Library\stm32f10x_iwdg.h)(0x4D783BB4)
-I (.\Library\stm32f10x_pwr.h)(0x4D783BB4)
-I (.\Library\stm32f10x_rcc.h)(0x4D783BB4)
-I (.\Library\stm32f10x_rtc.h)(0x4D783BB4)
-I (.\Library\stm32f10x_sdio.h)(0x4D783BB4)
-I (.\Library\stm32f10x_spi.h)(0x4D783BB4)
-I (.\Library\stm32f10x_tim.h)(0x4D783BB4)
-I (.\Library\stm32f10x_usart.h)(0x4D783BB4)
-I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
-I (.\Library\misc.h)(0x4D783BB4)
-I (Input\MQ135.h)(0x693FC80F)
 I (Input\AD.h)(0x692824B1)
+F (.\Input\AD.h)(0x692824B1)()
+F (.\Input\MQ135.c)(0x6944BD97)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\freertos\inc -I .\freertos\port -I .\freertos\src -I .\freertos -I .\system -I .\Tasks -I .\Output -I .\Input-I.\RTE\_Target_1-ID:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\keil5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\mq135.o --omf_browse .\objects\mq135.crf --depend .\objects\mq135.d)
+I (.\Start\stm32f10x.h)(0x4D783CB4)
+I (.\Start\core_cm3.h)(0x4D523B58)
+I (D:\keil5\ARM\ARMCC\include\stdint.h)(0x588B8344)
+I (.\Start\system_stm32f10x.h)(0x4D783CAA)
+I (.\User\stm32f10x_conf.h)(0x4D99A59E)
+I (.\Library\stm32f10x_adc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_bkp.h)(0x4D783BB4)
+I (.\Library\stm32f10x_can.h)(0x4D783BB4)
+I (.\Library\stm32f10x_cec.h)(0x4D783BB4)
+I (.\Library\stm32f10x_crc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_dac.h)(0x4D783BB4)
+I (.\Library\stm32f10x_dbgmcu.h)(0x4D783BB4)
+I (.\Library\stm32f10x_dma.h)(0x4D783BB4)
+I (.\Library\stm32f10x_exti.h)(0x4D783BB4)
+I (.\Library\stm32f10x_flash.h)(0x4D783BB4)
+I (.\Library\stm32f10x_fsmc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_gpio.h)(0x4D783BB4)
+I (.\Library\stm32f10x_i2c.h)(0x4D783BB4)
+I (.\Library\stm32f10x_iwdg.h)(0x4D783BB4)
+I (.\Library\stm32f10x_pwr.h)(0x4D783BB4)
+I (.\Library\stm32f10x_rcc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_rtc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_sdio.h)(0x4D783BB4)
+I (.\Library\stm32f10x_spi.h)(0x4D783BB4)
+I (.\Library\stm32f10x_tim.h)(0x4D783BB4)
+I (.\Library\stm32f10x_usart.h)(0x4D783BB4)
+I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
+I (.\Library\misc.h)(0x4D783BB4)
+I (Input\MQ135.h)(0x6944BDA2)
+I (Input\AD.h)(0x692824B1)
+I (.\system\Delay.h)(0x6943F8AE)
 I (D:\keil5\ARM\ARMCC\include\math.h)(0x588B8344)
-F (.\Input\MQ135.h)(0x693FC80F)()
+F (.\Input\MQ135.h)(0x6944BDA2)()
 F (.\Input\MyI2C1.c)(0x693F6D63)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\freertos\inc -I .\freertos\port -I .\freertos\src -I .\freertos -I .\system -I .\Tasks -I .\Output -I .\Input-I.\RTE\_Target_1-ID:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\keil5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\myi2c1.o --omf_browse .\objects\myi2c1.crf --depend .\objects\myi2c1.d)
 I (.\Start\stm32f10x.h)(0x4D783CB4)
 I (.\Start\core_cm3.h)(0x4D523B58)
@@ -1559,8 +1560,7 @@ I (.\freertos\inc\list.h)(0x64020E50)
 I (.\freertos\inc\semphr.h)(0x64020E50)
 I (.\Input\AHT20.h)(0x694417C5)
 I (.\Input\BH1750.h)(0x69378B26)
-I (.\Input\MQ135.h)(0x693FC80F)
-I (.\Input\AD.h)(0x692824B1)
+I (.\Input\MQ135.h)(0x6944BDA2)
 I (D:\keil5\ARM\ARMCC\include\stdio.h)(0x588B8344)
 F (.\Tasks\sensor_task.h)(0x693976F9)()
 F (.\Tasks\control_task.c)(0x6940CC26)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\freertos\inc -I .\freertos\port -I .\freertos\src -I .\freertos -I .\system -I .\Tasks -I .\Output -I .\Input-I.\RTE\_Target_1-ID:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\keil5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\control_task.o --omf_browse .\objects\control_task.crf --depend .\objects\control_task.d)

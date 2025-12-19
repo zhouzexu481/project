@@ -55,4 +55,3 @@
 .\objects\main.o: .\Input\AHT20.h
 .\objects\main.o: .\Input\BH1750.h
 .\objects\main.o: .\Input\MQ135.h
-.\objects\main.o: .\Input\AD.h
