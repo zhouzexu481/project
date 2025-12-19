@@ -54,6 +54,8 @@ void Control_Task(void *pvParameters)
             // 如果系统处于正常模式，执行自动控制
             if( *TaskManager_GetSystemMode() == SYS_MODE_AUTO)
             {
+				// 加这行调试打印
+    printf("Auto Mode: Temp=%.1f\r\n", data.temperature);
                 Motor_TemperatureControl(data.temperature);      // 温控风扇
                 PWM_Humidifier_AutoControl(data.humidity);       // 湿控加湿
                 LED_AutoControlByLight(data.light_intensity);    // 光控灯

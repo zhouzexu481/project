@@ -29,6 +29,16 @@
 .\objects\aht20.o: .\Library\stm32f10x_wwdg.h
 .\objects\aht20.o: .\Library\misc.h
 .\objects\aht20.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\aht20.o: .\freertos\inc\FreeRTOS.h
+.\objects\aht20.o: D:\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\aht20.o: .\freertos\FreeRTOSConfig.h
+.\objects\aht20.o: .\freertos\inc\projdefs.h
+.\objects\aht20.o: .\freertos\inc\portable.h
+.\objects\aht20.o: .\freertos\inc\deprecated_definitions.h
+.\objects\aht20.o: .\freertos\port\portmacro.h
+.\objects\aht20.o: .\freertos\inc\mpu_wrappers.h
+.\objects\aht20.o: .\freertos\inc\task.h
+.\objects\aht20.o: .\freertos\inc\list.h
 .\objects\aht20.o: Input\MyI2C1.h
 .\objects\aht20.o: Input\AHT20_Reg.h
 .\objects\aht20.o: .\system\Delay.h

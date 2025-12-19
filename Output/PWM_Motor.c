@@ -72,7 +72,7 @@ void Motor_TemperatureControl(float temperature)
 	}
     else if (temperature > 25.0f)
 	{
-		Motor_SetSpeed(30);
+		Motor_SetSpeed(0);			//演示改为0,原本30
 	}
     else
 	{

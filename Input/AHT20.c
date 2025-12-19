@@ -1,5 +1,7 @@
 #include "stm32f10x.h"                  // Device header
 #include <stdio.h> // 需要用到 printf
+#include "FreeRTOS.h"
+#include "task.h"
 #include "MyI2C1.h"
 #include "AHT20_Reg.h"
 #include "Delay.h"
@@ -51,7 +53,7 @@ uint8_t AHT20_ReadData(float *Temperature, float *Humidity)
 	MyI2C1_ReceiveAck();				// 接收应答
 	MyI2C1_Stop();						// 终止时序
 	
-	Delay_ms(80);						// 等待测量(>75ms)
+	vTaskDelay(pdMS_TO_TICKS(80));  	// 等待测量(>75ms)
 	
 	/* 2. 读取6个字节数据 */
 	//读命令

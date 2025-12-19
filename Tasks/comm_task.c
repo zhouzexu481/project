@@ -34,7 +34,7 @@ void Comm_Task(void *pvParameters)
         if(xQueuePeek(TaskManager_GetSensorQueue(), &data, 0) == pdPASS) 
         {
             // 格式化打印：%.1f 表示保留1位小数
-            printf("[Status] T:%.1fC  H:%.1f%%  Lux:%.0f  Air:%.0f\r\n", 
+            printf("[Status] T:%.1fC  H:%.1f%%  Lux:%.0f  Air:%.2f\r\n", 
                    data.temperature, 
                    data.humidity, 
                    data.light_intensity, 
