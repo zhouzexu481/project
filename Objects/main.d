@@ -46,6 +46,7 @@
 .\objects\main.o: .\system\Serial.h
 .\objects\main.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: .\system\Key.h
+.\objects\main.o: .\Input\AD.h
 .\objects\main.o: .\Output\Buzzer.h
 .\objects\main.o: .\Output\PWM_Motor.h
 .\objects\main.o: .\Output\PWM_Humidifier.h

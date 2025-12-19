@@ -4,17 +4,32 @@
 #include "Delay.h" 
 #include <math.h>
 
-#define MQ135_READ_TIMES 10  // MQ-135传感器ADC循环读取次数
+// MQ135初始化
+void MQ135_Init(void)
+{
+    AD_Init(); // 复用AD初始化函数，配置PA7为ADC输入
+}
 
-// 获取PPM浓度
-// 移植自提供的可用代码逻辑
-uint16_t MQ135_GetPPM(void)
+// 获取ADC均值采样值
+uint16_t MQ135_GetData(void)
 {
     uint32_t tempData = 0;
-    float Vol, RS, ppm;
-    float R0 = 6.64f; 
+    // 多次采样求均值，滤波
+    for (uint8_t i = 0; i < MQ135_READ_TIMES; i++)
+    {
+        tempData += AD_GetValue();
+        Delay_ms(5);
+    }
+    tempData /= MQ135_READ_TIMES;
+    return (uint16_t)tempData;
+}
 
-    // 均值滤波
+// 获取PPM浓度（浮点型，完全复刻样板代码逻辑）
+float MQ135_GetData_PPM(void)
+{
+    float tempData = 0;
+    
+    // 均值采样
     for (uint8_t i = 0; i < MQ135_READ_TIMES; i++)
     {
         tempData += AD_GetValue();
@@ -22,20 +37,31 @@ uint16_t MQ135_GetPPM(void)
     }
     tempData /= MQ135_READ_TIMES;
     
-    // 转换为电压 (复用参考代码中的5V计算逻辑)
-    Vol = (float)tempData * 5.0f / 4096.0f;
+    // 电压转换：样板代码用5V参考，需和样板保持一致
+    float Vol = (tempData * 5.0f) / 4096.0f;
     
-    // 避免除0
-    if(Vol == 0) Vol = 0.01f; 
+    // 避免除0错误
+    if (Vol < 0.01f) Vol = 0.01f;
     
-    // 算出传感器电阻 Rs
-    RS = (5.0f - Vol) / (Vol * 0.5f);
+    // 计算传感器电阻RS
+    float RS = (5.0f - Vol) / (Vol * 0.5f);
     
-    // 算出 PPM
-    ppm = pow(11.5428f * R0 / RS, 0.6549f);
+    // 样板中的R0校准值
+    float R0 = 6.64f;
+    
+    // 浓度计算公式
+    float ppm = pow(11.5428f * R0 / RS, 0.6549f);
+    
+    return ppm;
+}
+
+// 你的原函数：获取PPM浓度
+uint16_t MQ135_GetPPM(void)
+{
+    float ppm = MQ135_GetData_PPM(); // 复用样板的浮点计算逻辑
     
     // 结果限幅
-    if(ppm > 1000) 
+    if (ppm > 1000)
     {
         ppm = 1000;
     }
@@ -43,15 +69,15 @@ uint16_t MQ135_GetPPM(void)
     return (uint16_t)ppm;
 }
 
-// 获取空气质量等级 (1-5级)
+// 获取空气质量等级
 uint8_t MQ135_GetAirQualityLevel(void)
 {
     uint16_t ppm = MQ135_GetPPM();
     
     // 简化的分级判断
-    if(ppm < 100) return 1;       // 优
-    if(ppm < 200) return 2;       // 良
-    if(ppm < 500) return 3;       // 轻度污染
-    if(ppm < 1000) return 4;      // 中度污染
-    return 5;                     // 重度污染
+    if (ppm < 100) return 1;       // 优
+    if (ppm < 200) return 2;       // 良
+    if (ppm < 500) return 3;       // 轻度污染
+    if (ppm < 1000) return 4;      // 中度污染
+    return 5;                      // 重度污染
 }

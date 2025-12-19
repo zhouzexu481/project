@@ -6,6 +6,7 @@
 #include "Serial.h"
 /* 包含所有硬件初始化头文件 */
 #include "Key.h"
+#include "AD.h" 
 #include "Buzzer.h"
 #include "PWM_Motor.h"
 #include "PWM_Humidifier.h"
