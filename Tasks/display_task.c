@@ -23,7 +23,7 @@ void Display_Task(void *pvParameters)
         {
             // === 第一行: 空气质量 & 蜂鸣器 ===
             // 左: Air:1234
-            sprintf(str_buf, "Air:%4.0f", data.air_quality);
+            sprintf(str_buf, "Air:%4.2f", data.air_quality);
             OLED_ShowString(1, 1, str_buf);
             
             // 右: Bz:ON / OFF

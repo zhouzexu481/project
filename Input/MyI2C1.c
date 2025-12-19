@@ -66,10 +66,11 @@ uint8_t MyI2C1_ReceiveByte(void) //接收一个字节
 	for(i = 0; i < 8; i++)
 	{
 		MyI2C1_W_SCL(1);
-		if(MyI2C1_R_SDA() == 1){Byte |= (0x80 >> i);} 
+		if(MyI2C1_R_SDA() == 1)
 		{
-			MyI2C1_W_SCL(0);
+			Byte |= (0x80 >> i);
 		}
+		MyI2C1_W_SCL(0);
 	}
 	return Byte;
 }

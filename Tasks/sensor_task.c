@@ -16,7 +16,7 @@ void Sensor_Task(void *pvParameters)
 		/* 读取数据 */
 		AHT20_ReadData(&data.temperature, &data.humidity);
 		data.light_intensity = BH1750_ReadLightLevel();
-		data.air_quality = MQ135_GetPPM();
+		data.air_quality = MQ135_GetData_PPM();
 		
 		/*只有在成功读取数据后，才更新队列 */
 		/* 注意：配套的队列长度必须为 1 */

@@ -35,7 +35,7 @@ void Buzzer_AutoControl(float air_quality)
 {
     if (auto_mode)
 	{
-        if (air_quality >= 100) 
+        if (air_quality >= 4)
 		{
             Buzzer_On();
         } 

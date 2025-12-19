@@ -24,7 +24,7 @@ uint16_t MQ135_GetData(void)
     return (uint16_t)tempData;
 }
 
-// 获取PPM浓度（浮点型，完全复刻样板代码逻辑）
+// 获取PPM浓度
 float MQ135_GetData_PPM(void)
 {
     float tempData = 0;
@@ -37,7 +37,7 @@ float MQ135_GetData_PPM(void)
     }
     tempData /= MQ135_READ_TIMES;
     
-    // 电压转换：样板代码用5V参考，需和样板保持一致
+    // 电压转换：
     float Vol = (tempData * 5.0f) / 4096.0f;
     
     // 避免除0错误
@@ -55,7 +55,7 @@ float MQ135_GetData_PPM(void)
     return ppm;
 }
 
-// 你的原函数：获取PPM浓度
+// 获取PPM浓度
 uint16_t MQ135_GetPPM(void)
 {
     float ppm = MQ135_GetData_PPM(); // 复用样板的浮点计算逻辑

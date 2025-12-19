@@ -47,3 +47,4 @@
 .\objects\comm_task.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\comm_task.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\comm_task.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\comm_task.o: .\Input\AD.h

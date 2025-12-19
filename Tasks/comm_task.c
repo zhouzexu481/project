@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "AD.h"
 
 /* 私有函数声明 (只在本文件内部使用) */
 static void Process_Command(char *cmd_str);
@@ -133,47 +134,5 @@ static void Show_Help(void)
     printf("4. BUZZ <0/1>     (e.g., BUZZ 1)\r\n");   // 蜂鸣器
     printf("5. MODE <0/1>     (0:Auto, 1:Manual)\r\n");
     printf("====================\r\n");
-	
-	
- uint32_t sum = 0;
-        uint16_t min_val = 4095;
-        uint16_t max_val = 0;
         
-        // 连续采样100次，观察波动
-        for(int i = 0; i < 100; i++)
-        {
-            uint16_t val = AD_GetValue();
-            sum += val;
-            
-            if(val < min_val) min_val = val;
-            if(val > max_val) max_val = val;
-            
-            Delay_ms(10);
-        }
-        
-        uint16_t avg_val = sum / 100;
-        float avg_voltage = avg_val * 3.3f / 4096.0f;
-        
-        printf("========== MQ135测试结果 ==========\r\n");
-        printf("ADC最小值: %u\r\n", min_val);
-        printf("ADC最大值: %u\r\n", max_val);
-        printf("ADC平均值: %u\r\n", avg_val);
-        printf("平均电压: %.3fV\r\n", avg_voltage);
-        printf("波动范围: %u\r\n", max_val - min_val);
-        printf("==================================\r\n\r\n");
-        
-        // 如果电压接近0，给出警告
-        if(avg_voltage < 0.5f)
-        {
-            printf("?? 警告：电压过低！可能的原因：\r\n");
-            printf("1. 传感器未接5V供电\r\n");
-            printf("2. 传感器损坏\r\n");
-            printf("3. 接线错误\r\n");
-        }
-        else if(avg_voltage > 3.0f)
-        {
-            printf("?? 警告：电压过高！可能的原因：\r\n");
-            printf("1. 传感器异常\r\n");
-            printf("2. 参考电压配置错误\r\n");
-        }
 }
