@@ -11,60 +11,57 @@
 void Display_Task(void *pvParameters)
 {
     SensorData_t data;
-    char str_buf[20]; // 缓冲区
+    char str_buf[20];
     
     OLED_Init();
-    OLED_Clear();
     
     while(1)
     {
-        /* 获取传感器数据 */
+        /* 从队列窥探数据 (只读不取) */
         if(xQueuePeek(TaskManager_GetSensorQueue(), &data, 0) == pdPASS)
         {
-            // === 第一行: 空气质量 & 蜂鸣器 ===
-            // 左: Air:1234
+            // === 1. 清空显存 (Frame Buffer) ===
+            // 这步在 RAM 中进行，极快，屏幕不会闪
+            OLED_Clear(); 
+            
+            // === 2. 绘制内容到显存 ===
+            
+            // --- 第一行 ---
             sprintf(str_buf, "Air:%4.2f", data.air_quality);
             OLED_ShowString(1, 1, str_buf);
             
-            // 右: Bz:ON / OFF
             if(Buzzer_GetState())
-			{
-				sprintf(str_buf, "Bz:ON ");
-			}
+                sprintf(str_buf, "Bz:ON ");
             else
-			{
-				sprintf(str_buf, "Bz:OFF");
-			}
-            OLED_ShowString(1, 10, str_buf); // 第10列开始显示右边 (10*8=80像素位置)
+                sprintf(str_buf, "Bz:OFF");
+            OLED_ShowString(1, 10, str_buf); 
 
-            // === 第二行: 温度 & 风扇 ===
-            // 左: Tmp:25.5
+            // --- 第二行 ---
             sprintf(str_buf, "Tmp:%4.1f", data.temperature);
             OLED_ShowString(2, 1, str_buf);
             
-            // 右: Fan:100
             sprintf(str_buf, "Fan:%3d", Get_Motor_Speed());
             OLED_ShowString(2, 10, str_buf);
 
-            // === 第三行: 湿度 & 加湿器 ===
-            // 左: Hum:60.5
+            // --- 第三行 ---
             sprintf(str_buf, "Hum:%4.1f", data.humidity);
             OLED_ShowString(3, 1, str_buf);
             
-            // 右: Mis:100
             sprintf(str_buf, "Mis:%3d", PWM_Humidifier_GetCurrentDuty());
             OLED_ShowString(3, 10, str_buf);
             
-            // === 第四行: 光照 & LED ===
-            // 左: Lux:1234
+            // --- 第四行 ---
             sprintf(str_buf, "Lux:%4.0f", data.light_intensity);
             OLED_ShowString(4, 1, str_buf);
             
-            // 右: Led:100
             sprintf(str_buf, "Led:%3d", LED_GetBrightness());
             OLED_ShowString(4, 10, str_buf);
+            
+            // === 3. 统一刷新 (Refresh) ===
+            // 将显存一次性推送到 OLED，实现帧同步
+            OLED_Refresh_Gram();
         }
         
-        vTaskDelay(pdMS_TO_TICKS(500)); // 0.5秒刷新一次
+        vTaskDelay(pdMS_TO_TICKS(500)); // 500ms 刷新一次
     }
 }
