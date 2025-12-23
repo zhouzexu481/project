@@ -1,1 +1,1 @@
-点击project\Project.uvprojx运行程序,在简历上扫描二维码观看项目演示及设计思路.
+              点击project\Project.uvprojx运行程序,在简历上扫描二维码观看项目演示及设计思路.
