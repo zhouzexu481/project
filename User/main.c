@@ -29,7 +29,6 @@ static void Hardware_Init(void)
     MyI2C1_Init();
     MyI2C2_Init();
     Serial_Init();
-	Serial2_Init();
     AHT20_Init();
 	BH1750_Init();
 	AHT20_Check();
