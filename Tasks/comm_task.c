@@ -34,6 +34,7 @@ void Comm_Task(void *pvParameters)
         }
         
         /* 2. 定时发送数据 (通过串口1 和 串口3) */
+        /* 只有当队列里有数据时才发送，如果没有数据（传感器挂了），这里就不会执行 */
         if(xQueuePeek(TaskManager_GetSensorQueue(), &data, 0) == pdPASS) 
         {
             /* 串口1: 调试打印 (保留原有功能) */
@@ -52,6 +53,13 @@ void Comm_Task(void *pvParameters)
             Serial3_Printf("\"air\":%.2f",   data.air_quality); // 最后一项不加逗号
             Serial3_Printf("}\r\n"); // 发送换行符作为结束标记
         }
+        else
+        {
+             // 如果队列一直是空的，说明 Sensor_Task 卡住了
+             // 为了方便排查，这里加了一句调试打印（只发给电脑，不发给ESP32）
+             printf("Warning: Sensor Queue is empty! Check AHT20/I2C connection.\r\n");
+        }
+
         // 延时 1000ms
         vTaskDelay(pdMS_TO_TICKS(1000)); 
     }
@@ -145,5 +153,4 @@ static void Show_Help(void)
     printf("4. BUZZ <0/1>     (e.g., BUZZ 1)\r\n");   // 蜂鸣器
     printf("5. MODE <0/1>     (0:Auto, 1:Manual)\r\n");
     printf("====================\r\n");
-        
 }
