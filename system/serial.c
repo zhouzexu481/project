@@ -178,3 +178,85 @@ void USART1_IRQHandler(void)
     }
 }
 
+/**
+  * @brief  初始化串口3 (与ESP32C3通信)
+  * @param  baud: 波特率 (通常ESP32C3默认为115200)
+  * @retval None
+  */
+void Serial3_Init(uint32_t baud)
+{
+    // 1. 开启时钟：USART3在APB1，GPIOB在APB2
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+
+    // 2. 配置GPIO
+    GPIO_InitTypeDef GPIO_InitStructure;
+    
+    // TX (PB10) - 复用推挽输出
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+    GPIO_Init(GPIOB, &GPIO_InitStructure);
+
+    // RX (PB11) - 浮空输入或上拉输入
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+    GPIO_Init(GPIOB, &GPIO_InitStructure);
+
+    // 3. 配置USART3参数
+    USART_InitTypeDef USART_InitStructure;
+    USART_InitStructure.USART_BaudRate = baud;
+    USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+    USART_InitStructure.USART_StopBits = USART_StopBits_1;
+    USART_InitStructure.USART_Parity = USART_Parity_No;
+    USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    USART_InitStructure.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
+    USART_Init(USART3, &USART_InitStructure);
+
+    // 4. 开启中断 (如果需要接收ESP32的回复)
+    // NVIC_InitTypeDef NVIC_InitStructure;
+    // NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
+    // NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+    // NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+    // NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    // NVIC_Init(&NVIC_InitStructure);
+    // USART_ITConfig(USART3, USART_IT_RXNE, ENABLE);
+
+    // 5. 使能串口
+    USART_Cmd(USART3, ENABLE);
+}
+
+/**
+  * @brief  串口3发送一个字节
+  */
+void Serial3_SendByte(uint8_t Byte)
+{
+    USART_SendData(USART3, Byte);
+    while (USART_GetFlagStatus(USART3, USART_FLAG_TXE) == RESET);
+}
+
+/**
+  * @brief  串口3发送字符串
+  */
+void Serial3_SendString(char *String)
+{
+    while (*String != '\0')
+    {
+        Serial3_SendByte(*String);
+        String++;
+    }
+}
+
+/**
+  * @brief  串口3格式化打印 (类似printf)
+  */
+void Serial3_Printf(char *format, ...)
+{
+    char String[100]; // 根据需要调整缓冲区大小
+    va_list arg;
+    va_start(arg, format);
+    vsprintf(String, format, arg);
+    va_end(arg);
+    Serial3_SendString(String);
+}
+

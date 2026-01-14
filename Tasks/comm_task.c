@@ -15,11 +15,13 @@ static void Show_Help(void);
  * 1. 处理串口收到的指令
  * 2. 定时向串口打印传感器数据
  */
-
 void Comm_Task(void *pvParameters)
 {
     SensorData_t data;
     
+    // 初始化串口3用于连接ESP32C3 (波特率115200)
+    Serial3_Init(115200);
+
     printf("System Started! Waiting for commands...\r\n");
     
     while(1) 
@@ -31,17 +33,24 @@ void Comm_Task(void *pvParameters)
             Process_Command(Serial_RxPacket); // 处理命令 (如 "LED 100")
         }
         
-        /* 2. 定时发送数据 (通过串口1) */
+        /* 2. 定时发送数据 (通过串口1 和 串口3) */
         if(xQueuePeek(TaskManager_GetSensorQueue(), &data, 0) == pdPASS) 
         {
-            /* * 改为只用串口1发送数据 
-             * 此时串口助手会收到 JSON 格式的数据
-             */
+            /* 串口1: 调试打印 (保留原有功能) */
             printf(" T:%3.1fC     H:%3.1f%%     L:%3.0fLux     A:%3.2f\r\n",
                    data.temperature, 
                    data.humidity, 
                    data.light_intensity, 
                    data.air_quality);
+
+            /* 串口3: 发送给ESP32 (OneNet JSON格式) */
+            // 格式示例: {"temp":25.5,"humi":50.0,"lux":100,"air":1.20}
+            Serial3_Printf("{");
+            Serial3_Printf("\"temp\":%.1f,", data.temperature);
+            Serial3_Printf("\"humi\":%.1f,", data.humidity);
+            Serial3_Printf("\"lux\":%.0f,",  data.light_intensity);
+            Serial3_Printf("\"air\":%.2f",   data.air_quality); // 最后一项不加逗号
+            Serial3_Printf("}\r\n"); // 发送换行符作为结束标记
         }
         // 延时 1000ms
         vTaskDelay(pdMS_TO_TICKS(1000)); 
