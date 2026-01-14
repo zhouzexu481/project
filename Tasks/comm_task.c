@@ -15,6 +15,7 @@ static void Show_Help(void);
  * 1. 处理串口收到的指令
  * 2. 定时向串口打印传感器数据
  */
+
 void Comm_Task(void *pvParameters)
 {
     SensorData_t data;
@@ -23,25 +24,30 @@ void Comm_Task(void *pvParameters)
     
     while(1) 
     {
-        /* 1. 检查有没有收到串口数据 */
+        /* 1. 检查有没有收到串口数据 (来自 PC 或 ESP32) */
         if(Serial_RxFlag == 1) 
         {
-            Serial_RxFlag = 0; // 清除标志位，防止重复处理
-            Process_Command(Serial_RxPacket); // 处理这条命令
+            Serial_RxFlag = 0; // 清除标志位
+            Process_Command(Serial_RxPacket); // 处理命令 (如 "LED 100")
         }
         
-        /* 2. 定时发送传感器数据 (Peek模式: 查看数据但不取走, 方便Display任务也用) */
+        /* 2. 定时发送数据到 OneNET (通过 USART3) */
         if(xQueuePeek(TaskManager_GetSensorQueue(), &data, 0) == pdPASS) 
         {
-            // 格式化打印：%.1f 表示保留1位小数
-            printf("[Status] T:%.1fC  H:%.1f%%  Lux:%.0f  Air:%.2f\r\n", 
+            // 调试口 (USART1) 保持人类可读格式
+            printf("[Debug] T:%.1f H:%.1f L:%.0f A:%.2f\r\n", 
+                   data.temperature, data.humidity, data.light_intensity, data.air_quality);
+
+            // 透传口 (USART3) 发送 JSON 格式
+            // 格式参考 OneJSON: {"id":"123", "version":"1.0", "params":{...}}
+            // 或者最简单的扁平 JSON (取决于ESP32代码怎么写)
+            Serial3_Printf("{\"temp\":%.1f,\"humi\":%.1f,\"lux\":%.0f,\"air\":%.2f}\n",
                    data.temperature, 
                    data.humidity, 
                    data.light_intensity, 
                    data.air_quality);
         }
-        
-        // 延时 1000ms，也就是说每秒打印一次数据
+        // 延时 1000ms
         vTaskDelay(pdMS_TO_TICKS(1000)); 
     }
 }
