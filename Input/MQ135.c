@@ -38,19 +38,19 @@ float MQ135_GetData_PPM(void)
     tempData /= MQ135_READ_TIMES;
     
     // 电压转换：
-    float Vol = (tempData * 5.0f) / 4096.0f;
+    float Vol = (tempData * 3.3f) / 4096.0f;
     
     // 避免除0错误
     if (Vol < 0.01f) Vol = 0.01f;
     
     // 计算传感器电阻RS
-    float RS = (5.0f - Vol) / (Vol * 0.5f);
+    float RS = (5.0f - Vol) / (Vol * 1.0f); 
     
     // 样板中的R0校准值
-    float R0 = 6.64f;
+    float R0 = 44.67f;
     
     // 浓度计算公式
-    float ppm = pow(11.5428f * R0 / RS, 0.6549f);
+    float ppm = pow(11.5428f * R0 / RS, 1.5269f);
     
     return ppm;
 }
@@ -61,9 +61,9 @@ uint16_t MQ135_GetPPM(void)
     float ppm = MQ135_GetData_PPM(); // 复用样板的浮点计算逻辑
     
     // 结果限幅
-    if (ppm > 1000)
+    if (ppm > 2000)
     {
-        ppm = 1000;
+        ppm = 2000;
     }
     
     return (uint16_t)ppm;
@@ -75,9 +75,9 @@ uint8_t MQ135_GetAirQualityLevel(void)
     uint16_t ppm = MQ135_GetPPM();
     
     // 简化的分级判断
-    if (ppm < 100) return 1;       // 优
-    if (ppm < 200) return 2;       // 良
-    if (ppm < 500) return 3;       // 轻度污染
-    if (ppm < 1000) return 4;      // 中度污染
+    if (ppm < 300) return 1;       // 优
+    if (ppm < 800) return 2;       // 良
+    if (ppm < 1500) return 3;       // 轻度污染
+    if (ppm < 2000) return 4;      // 中度污染
     return 5;                      // 重度污染
 }

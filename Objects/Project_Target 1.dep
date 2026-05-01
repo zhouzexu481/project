@@ -1177,7 +1177,7 @@ I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
 I (.\Library\misc.h)(0x4D783BB4)
 I (Input\AD.h)(0x6944FF61)
 F (.\Input\AD.h)(0x6944FF61)()
-F (.\Input\MQ135.c)(0x69450C97)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\freertos\inc -I .\freertos\port -I .\freertos\src -I .\freertos -I .\system -I .\Tasks -I .\Output -I .\Input-I.\RTE\_Target_1-ID:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\keil5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\mq135.o --omf_browse .\objects\mq135.crf --depend .\objects\mq135.d)
+F (.\Input\MQ135.c)(0x69F47DDC)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\freertos\inc -I .\freertos\port -I .\freertos\src -I .\freertos -I .\system -I .\Tasks -I .\Output -I .\Input-I.\RTE\_Target_1-ID:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\keil5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\mq135.o --omf_browse .\objects\mq135.crf --depend .\objects\mq135.d)
 I (.\Start\stm32f10x.h)(0x4D783CB4)
 I (.\Start\core_cm3.h)(0x4D523B58)
 I (D:\keil5\ARM\ARMCC\include\stdint.h)(0x588B8344)
@@ -1354,7 +1354,7 @@ I (.\system\Delay.h)(0x6943F8AE)
 I (D:\keil5\ARM\ARMCC\include\math.h)(0x588B8344)
 F (.\Input\BH1750.h)(0x69378B26)()
 F (.\Input\BH1750_Reg.h)(0x692834C5)()
-F (.\Output\Buzzer.c)(0x69451CB4)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\freertos\inc -I .\freertos\port -I .\freertos\src -I .\freertos -I .\system -I .\Tasks -I .\Output -I .\Input-I.\RTE\_Target_1-ID:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\keil5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\buzzer.o --omf_browse .\objects\buzzer.crf --depend .\objects\buzzer.d)
+F (.\Output\Buzzer.c)(0x69F47EBB)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\freertos\inc -I .\freertos\port -I .\freertos\src -I .\freertos -I .\system -I .\Tasks -I .\Output -I .\Input-I.\RTE\_Target_1-ID:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\keil5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\buzzer.o --omf_browse .\objects\buzzer.crf --depend .\objects\buzzer.d)
 I (.\Start\stm32f10x.h)(0x4D783CB4)
 I (.\Start\core_cm3.h)(0x4D523B58)
 I (D:\keil5\ARM\ARMCC\include\stdint.h)(0x588B8344)
@@ -1417,7 +1417,7 @@ I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
 I (.\Library\misc.h)(0x4D783BB4)
 I (Output\PWM_Motor.h)(0x693FD7D5)
 F (.\Output\PWM_Motor.h)(0x693FD7D5)()
-F (.\Output\PWM_Humidifier.c)(0x693FDC30)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\freertos\inc -I .\freertos\port -I .\freertos\src -I .\freertos -I .\system -I .\Tasks -I .\Output -I .\Input-I.\RTE\_Target_1-ID:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\keil5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\pwm_humidifier.o --omf_browse .\objects\pwm_humidifier.crf --depend .\objects\pwm_humidifier.d)
+F (.\Output\PWM_Humidifier.c)(0x69F0D691)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\freertos\inc -I .\freertos\port -I .\freertos\src -I .\freertos -I .\system -I .\Tasks -I .\Output -I .\Input-I.\RTE\_Target_1-ID:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\keil5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\pwm_humidifier.o --omf_browse .\objects\pwm_humidifier.crf --depend .\objects\pwm_humidifier.d)
 I (.\Start\stm32f10x.h)(0x4D783CB4)
 I (.\Start\core_cm3.h)(0x4D523B58)
 I (D:\keil5\ARM\ARMCC\include\stdint.h)(0x588B8344)
@@ -1622,7 +1622,7 @@ I (.\Output\PWM_Humidifier.h)(0x692914A1)
 I (.\Output\PWM_LED.h)(0x693FDD35)
 I (.\Output\Buzzer.h)(0x693FCB92)
 F (.\Tasks\control_task.h)(0x6939770A)()
-F (.\Tasks\display_task.c)(0x694A5504)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\freertos\inc -I .\freertos\port -I .\freertos\src -I .\freertos -I .\system -I .\Tasks -I .\Output -I .\Input-I.\RTE\_Target_1-ID:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\keil5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\display_task.o --omf_browse .\objects\display_task.crf --depend .\objects\display_task.d)
+F (.\Tasks\display_task.c)(0x69F4723F)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\freertos\inc -I .\freertos\port -I .\freertos\src -I .\freertos -I .\system -I .\Tasks -I .\Output -I .\Input-I.\RTE\_Target_1-ID:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\keil5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\display_task.o --omf_browse .\objects\display_task.crf --depend .\objects\display_task.d)
 I (Tasks\task_manager.h)(0x6940CC05)
 I (Tasks\config.h)(0x6940C894)
 I (.\Start\stm32f10x.h)(0x4D783CB4)
@@ -1671,7 +1671,7 @@ I (.\Output\PWM_Motor.h)(0x693FD7D5)
 I (.\Output\PWM_Humidifier.h)(0x692914A1)
 I (.\Output\PWM_LED.h)(0x693FDD35)
 I (.\Output\Buzzer.h)(0x693FCB92)
-F (.\Tasks\display_task.h)(0x69397716)()
+F (.\Tasks\display_task.h)(0x69F4723F)()
 F (.\Tasks\comm_task.c)(0x6967AE87)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Library -I .\freertos\inc -I .\freertos\port -I .\freertos\src -I .\freertos -I .\system -I .\Tasks -I .\Output -I .\Input-I.\RTE\_Target_1-ID:\keil5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\keil5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\comm_task.o --omf_browse .\objects\comm_task.crf --depend .\objects\comm_task.d)
 I (Tasks\comm_task.h)(0x69400F16)
 I (Tasks\task_manager.h)(0x6940CC05)

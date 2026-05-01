@@ -61,11 +61,11 @@ uint8_t PWM_Humidifier_GetCurrentDuty(void)
 
 void PWM_Humidifier_AutoControl(float humidity)
 {
-    if(humidity < 40.0f)
+    if(humidity < 30.0f)
 	{
 		PWM_Humidifier_SetDutyCycle(100);
 	}
-    else if(humidity < 60.0f) 
+    else if(humidity < 50.0f) 
 	{
 		PWM_Humidifier_SetDutyCycle(50);
 	}
