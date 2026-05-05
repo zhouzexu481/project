@@ -8,7 +8,7 @@ void Control_Task(void *pvParameters)
 {
     SensorData_t data;
     ControlCommand_t cmd;
-    
+	
     while(1)
     {
         /* 1.处理控制命令 */
@@ -57,7 +57,7 @@ void Control_Task(void *pvParameters)
 	            Motor_TemperatureControl(data.temperature);      // 温控风扇
                 PWM_Humidifier_AutoControl(data.humidity);       // 湿控加湿
                 LED_AutoControlByLight(data.light_intensity);    // 光控灯
-                Buzzer_AutoControl(data.air_quality);            // 气报警
+                Buzzer_AutoControl(data.air_quality);            // 空气报警
             }
         }
 		

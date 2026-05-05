@@ -67,7 +67,7 @@ void PWM_Humidifier_AutoControl(float humidity)
 	}
     else if(humidity < 50.0f) 
 	{
-		PWM_Humidifier_SetDutyCycle(50);
+		PWM_Humidifier_SetDutyCycle(80);
 	}
     else 
 	{

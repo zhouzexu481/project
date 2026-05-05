@@ -21,9 +21,7 @@ void Comm_Task(void *pvParameters)
     
     // 初始化串口3用于连接ESP32C3 (波特率115200)
     Serial3_Init(115200);
-
-    printf("System Started! Waiting for commands...\r\n");
-    
+	
     while(1) 
     {
         /* 1. 检查有没有收到串口数据 (来自 PC 或 ESP32) */
@@ -35,7 +33,7 @@ void Comm_Task(void *pvParameters)
         
         /* 2. 定时发送数据 (通过串口1 和 串口3) */
         /* 只有当队列里有数据时才发送，如果没有数据（传感器挂了），这里就不会执行 */
-        if(xQueuePeek(TaskManager_GetSensorQueue(), &data, 0) == pdPASS) 
+        if(xQueuePeek(TaskManager_GetSensorQueue(), &data, pdMS_TO_TICKS(200)) == pdPASS) 
         {
             /* 串口1: 调试打印 (保留原有功能) */
             printf(" T:%3.1fC     H:%3.1f%%     L:%3.0fLux     A:%3.2f\r\n",

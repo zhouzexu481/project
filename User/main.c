@@ -31,7 +31,6 @@ static void Hardware_Init(void)
     Serial_Init();
     AHT20_Init();
 	BH1750_Init();
-	AHT20_Check();
 }
 
 int main(void)
@@ -59,7 +58,7 @@ int main(void)
     vTaskStartScheduler();
     
     /* 正常情况不会执行到这里 */
-    while(1);
+    //while(1);
 }
 
 /* FreeRTOS Hooks */
@@ -69,6 +68,6 @@ void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName) {
 }
 void vApplicationMallocFailedHook(void) {
     printf("Malloc Failed!\r\n");
-    while(1);
+    while(1);  
 }
 void vApplicationIdleHook(void) {}
