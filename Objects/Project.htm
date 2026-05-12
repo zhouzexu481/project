@@ -3,11 +3,11 @@
 <title>Static Call Graph - [.\Objects\Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Tue May 05 23:19:46 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Tue May 12 10:22:51 2026
 <BR><P>
 <H3>Maximum Stack Usage =        320 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-Sensor_Task &rArr; MQ135_GetData_PPM &rArr; pow &rArr; __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
+Sensor_Task &rArr; MQ2_GetData_PPM &rArr; pow &rArr; __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 <P>
 <H3>
 Mutually Recursive functions
@@ -321,7 +321,7 @@ Global Symbols
 <LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_epilogue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ135_GetData_PPM
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ2_GetData_PPM
 <LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_frsub
 </UL>
 
@@ -330,7 +330,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ135_GetData_PPM
+<BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ2_GetData_PPM
 </UL>
 
 <P><STRONG><a name="[4e]"></a>__aeabi_frsub</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, fadd.o(.text), UNUSED)
@@ -340,7 +340,7 @@ Global Symbols
 <P><STRONG><a name="[b8]"></a>__aeabi_fmul</STRONG> (Thumb, 100 bytes, Stack size 8 bytes, fmul.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_fmul
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ135_GetData_PPM
+<BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ2_GetData_PPM
 </UL>
 
 <P><STRONG><a name="[4f]"></a>__aeabi_fdiv</STRONG> (Thumb, 124 bytes, Stack size 8 bytes, fdiv.o(.text))
@@ -348,7 +348,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_round
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ135_GetData_PPM
+<BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ2_GetData_PPM
 </UL>
 
 <P><STRONG><a name="[50]"></a>__aeabi_dadd</STRONG> (Thumb, 322 bytes, Stack size 48 bytes, dadd.o(.text))
@@ -414,7 +414,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_epilogue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AHT20_ReadData
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ135_GetData_PPM
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ2_GetData_PPM
 </UL>
 
 <P><STRONG><a name="[5a]"></a>__aeabi_ui2d</STRONG> (Thumb, 26 bytes, Stack size 16 bytes, dfltui.o(.text))
@@ -428,7 +428,7 @@ Global Symbols
 <P><STRONG><a name="[7e]"></a>__aeabi_f2d</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, f2d.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Buzzer_AutoControl
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AHT20_ReadData
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ135_GetData_PPM
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ2_GetData_PPM
 <LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Display_Task
 <LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Comm_Task
 </UL>
@@ -446,19 +446,19 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BH1750_ReadLightLevel
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AHT20_ReadData
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ135_GetData_PPM
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ2_GetData_PPM
 </UL>
 
 <P><STRONG><a name="[145]"></a>__aeabi_cfcmpeq</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, cfcmple.o(.text), UNUSED)
 
 <P><STRONG><a name="[af]"></a>__aeabi_cfcmple</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, cfcmple.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ135_GetData_PPM
+<BR><BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ2_GetData_PPM
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_AutoControlByLight
-<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Humidifier_AutoControl
 </UL>
 
 <P><STRONG><a name="[be]"></a>__aeabi_cfrcmple</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, cfrcmple.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_TemperatureControl
+<BR><BR>[Called By]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Humidifier_AutoControl
+<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_TemperatureControl
 </UL>
 
 <P><STRONG><a name="[146]"></a>__aeabi_uidiv</STRONG> (Thumb, 0 bytes, Stack size 12 bytes, uidiv.o(.text), UNUSED)
@@ -656,7 +656,7 @@ Global Symbols
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC_GetFlagStatus
 <LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC_GetConversionValue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ135_GetData_PPM
+<BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ2_GetData_PPM
 </UL>
 
 <P><STRONG><a name="[69]"></a>AD_Init</STRONG> (Thumb, 144 bytes, Stack size 32 bytes, ad.o(i.AD_Init))
@@ -828,7 +828,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BH1750_Init
 <LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AHT20_Init
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ135_GetData_PPM
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ2_GetData_PPM
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Init
 </UL>
 
@@ -958,8 +958,8 @@ Global Symbols
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_AutoControlByLight
 </UL>
 
-<P><STRONG><a name="[b7]"></a>MQ135_GetData_PPM</STRONG> (Thumb, 172 bytes, Stack size 56 bytes, mq135.o(i.MQ135_GetData_PPM))
-<BR><BR>[Stack]<UL><LI>Max Depth = 296<LI>Call Chain = MQ135_GetData_PPM &rArr; pow &rArr; __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
+<P><STRONG><a name="[b7]"></a>MQ2_GetData_PPM</STRONG> (Thumb, 172 bytes, Stack size 56 bytes, mq2.o(i.MQ2_GetData_PPM))
+<BR><BR>[Stack]<UL><LI>Max Depth = 296<LI>Call Chain = MQ2_GetData_PPM &rArr; pow &rArr; __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
 <LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fsub
@@ -1364,10 +1364,10 @@ Global Symbols
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Init
 </UL>
 
-<P><STRONG><a name="[9b]"></a>PWM_Humidifier_AutoControl</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, pwm_humidifier.o(i.PWM_Humidifier_AutoControl))
+<P><STRONG><a name="[9b]"></a>PWM_Humidifier_AutoControl</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, pwm_humidifier.o(i.PWM_Humidifier_AutoControl))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = PWM_Humidifier_AutoControl &rArr; PWM_Humidifier_Off &rArr; PWM_Humidifier_SetDutyCycle
 </UL>
-<BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfcmple
+<BR>[Calls]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfrcmple
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Humidifier_SetDutyCycle
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Humidifier_Off
 </UL>
@@ -1445,12 +1445,12 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[38]"></a>Sensor_Task</STRONG> (Thumb, 74 bytes, Stack size 24 bytes, sensor_task.o(i.Sensor_Task))
-<BR><BR>[Stack]<UL><LI>Max Depth = 320<LI>Call Chain = Sensor_Task &rArr; MQ135_GetData_PPM &rArr; pow &rArr; __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
+<BR><BR>[Stack]<UL><LI>Max Depth = 320<LI>Call Chain = Sensor_Task &rArr; MQ2_GetData_PPM &rArr; pow &rArr; __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueGenericSend
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BH1750_ReadLightLevel
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AHT20_ReadData
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ135_GetData_PPM
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ2_GetData_PPM
 <LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetTickCount
 <LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskDelayUntil
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskManager_GetSensorQueue
@@ -1860,7 +1860,7 @@ Global Symbols
 <LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_infnan2
 <LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_divzero
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ135_GetData_PPM
+<BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MQ2_GetData_PPM
 </UL>
 
 <P><STRONG><a name="[129]"></a>pvPortMalloc</STRONG> (Thumb, 218 bytes, Stack size 32 bytes, heap_4.o(i.pvPortMalloc))

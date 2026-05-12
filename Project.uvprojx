@@ -896,14 +896,14 @@
               <FilePath>.\Input\AD.h</FilePath>
             </File>
             <File>
-              <FileName>MQ135.c</FileName>
+              <FileName>MQ2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Input\MQ135.c</FilePath>
+              <FilePath>.\Input\MQ2.c</FilePath>
             </File>
             <File>
-              <FileName>MQ135.h</FileName>
+              <FileName>MQ2.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Input\MQ135.h</FilePath>
+              <FilePath>.\Input\MQ2.h</FilePath>
             </File>
             <File>
               <FileName>MyI2C1.c</FileName>
@@ -981,16 +981,6 @@
               <FilePath>.\Output\PWM_Motor.h</FilePath>
             </File>
             <File>
-              <FileName>PWM_Humidifier.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Output\PWM_Humidifier.c</FilePath>
-            </File>
-            <File>
-              <FileName>PWM_Humidifier.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Output\PWM_Humidifier.h</FilePath>
-            </File>
-            <File>
               <FileName>PWM_LED.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Output\PWM_LED.c</FilePath>
@@ -999,6 +989,16 @@
               <FileName>PWM_LED.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Output\PWM_LED.h</FilePath>
+            </File>
+            <File>
+              <FileName>PWM_WaterPump.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Output\PWM_WaterPump.c</FilePath>
+            </File>
+            <File>
+              <FileName>PWM_WaterPump.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Output\PWM_WaterPump.h</FilePath>
             </File>
           </Files>
         </Group>

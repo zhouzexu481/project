@@ -4,7 +4,7 @@
 
 /* 引入所有硬件头文件以获取状态 */
 #include "PWM_Motor.h"      // Get_Motor_Speed()
-#include "PWM_Humidifier.h" // PWM_Humidifier_GetCurrentDuty()
+#include "PWM_PWM_WaterPump.h" // PWM_PWM_WaterPump_GetCurrentDuty()
 #include "PWM_LED.h"        // LED_GetBrightness()
 #include "Buzzer.h"         // Buzzer_GetState()
 
@@ -27,7 +27,7 @@ void Display_Task(void *pvParameters)
             // === 2. 绘制内容到显存 ===
             
             // --- 第一行 ---
-            sprintf(str_buf, "Air:%4.2f", data.air_quality);
+            sprintf(str_buf, "Smk:%4.2f", data.smoke_level);
             OLED_ShowString(1, 1, str_buf);
             
             if(Buzzer_GetState())
@@ -47,7 +47,7 @@ void Display_Task(void *pvParameters)
             sprintf(str_buf, "Hum:%4.1f", data.humidity);
             OLED_ShowString(3, 1, str_buf);
             
-            sprintf(str_buf, "Mis:%3d", PWM_Humidifier_GetCurrentDuty());
+            sprintf(str_buf, "Mis:%3d", PWM_PWM_WaterPump_GetCurrentDuty());
             OLED_ShowString(3, 10, str_buf);
             
             // --- 第四行 ---

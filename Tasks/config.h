@@ -32,7 +32,7 @@ typedef enum {
 typedef enum {
     CMD_LED_CONTROL = 0,
     CMD_MOTOR_CONTROL,
-    CMD_HUMIDIFIER_CONTROL,
+    CMD_PWM_WaterPump_CONTROL,
     CMD_BUZZER_CONTROL,
     CMD_SYSTEM_MODE
 } ControlCommandType_t;
@@ -48,7 +48,7 @@ typedef struct {
     float temperature;
     float humidity;
     float light_intensity;
-    float air_quality;
+    float smoke_level;
 } SensorData_t;
 
 #endif

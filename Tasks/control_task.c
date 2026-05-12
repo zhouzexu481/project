@@ -1,6 +1,6 @@
 #include "task_manager.h"
 #include "PWM_Motor.h"
-#include "PWM_Humidifier.h"
+#include "PWM_PWM_WaterPump.h"
 #include "PWM_LED.h"
 #include "Buzzer.h"
 
@@ -24,8 +24,8 @@ void Control_Task(void *pvParameters)
 					Motor_SetSpeed((uint8_t)cmd.param);
 				break;
 				
-				case CMD_HUMIDIFIER_CONTROL:
-					PWM_Humidifier_SetDutyCycle((uint8_t)cmd.param);
+				case CMD_PWM_WaterPump_CONTROL:
+					PWM_PWM_WaterPump_SetDutyCycle((uint8_t)cmd.param);
 				break;
 
 				case CMD_BUZZER_CONTROL:
@@ -55,9 +55,9 @@ void Control_Task(void *pvParameters)
             if( *TaskManager_GetSystemMode() == SYS_MODE_AUTO)
             {
 	            Motor_TemperatureControl(data.temperature);      // ÎÂ¿Ø·çÉÈ
-                PWM_Humidifier_AutoControl(data.humidity);       // Êª¿Ø¼ÓÊª
+                PWM_PWM_WaterPump_AutoControl(data.smoke_level);    // ÑÌÎí¿ØÖÆË®±Ã
                 LED_AutoControlByLight(data.light_intensity);    // ¹â¿ØµÆ
-                Buzzer_AutoControl(data.air_quality);            // ¿ÕÆø±¨¾¯
+                Buzzer_AutoControl(data.smoke_level);            // ÑÌÎí±¨¾¯
             }
         }
 		

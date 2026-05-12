@@ -36,19 +36,20 @@ void Comm_Task(void *pvParameters)
         if(xQueuePeek(TaskManager_GetSensorQueue(), &data, pdMS_TO_TICKS(200)) == pdPASS) 
         {
             /* 串口1: 调试打印 (保留原有功能) */
-            printf(" T:%3.1fC     H:%3.1f%%     L:%3.0fLux     A:%3.2f\r\n",
+            // 将原来的 A:%3.2f 改为 Smk:%3.2f，读取 data.smoke_level
+            printf(" T:%3.1fC     H:%3.1f%%     L:%3.0fLux     Smk:%3.2f\r\n",
                    data.temperature, 
                    data.humidity, 
                    data.light_intensity, 
-                   data.air_quality);
+                   data.smoke_level);
 
             /* 串口3: 发送给ESP32 (OneNet JSON格式) */
-            // 格式示例: {"temp":25.5,"humi":50.0,"lux":100,"air":1.20}
+            // 格式示例: {"temp":25.5,"humi":50.0,"lux":100,"smk":1.20}
             Serial3_Printf("{");
             Serial3_Printf("\"temp\":%.1f,", data.temperature);
             Serial3_Printf("\"humi\":%.1f,", data.humidity);
             Serial3_Printf("\"lux\":%.0f,",  data.light_intensity);
-            Serial3_Printf("\"air\":%.2f",   data.air_quality); // 最后一项不加逗号
+            Serial3_Printf("\"smk\":%.2f",   data.smoke_level);
             Serial3_Printf("}\r\n"); // 发送换行符作为结束标记
         }
         else
@@ -87,13 +88,13 @@ static void Process_Command(char *cmd_str)
     }
 
     /* 第三步: 匹配命令并发送到控制队列 */
-    /* 1. 加湿器指令 (例如: MIST 50) */
-    if (strcmp(name, "MIST") == 0)  //比较两个字符串是否一致
+    /* 1. 加湿器/水泵指令 (例如: PUMP 50) */
+    if (strcmp(name, "PUMP") == 0)  //比较两个字符串是否一致
     {
-        ctrl_cmd.cmd_type = CMD_HUMIDIFIER_CONTROL;
+        ctrl_cmd.cmd_type = CMD_PWM_WaterPump_CONTROL;
         ctrl_cmd.param = val; // 0-100
         xQueueSend(TaskManager_GetControlQueue(), &ctrl_cmd, 0);
-        printf("-> Set Mist to %d\r\n", val);
+        printf("-> Set PUMP to %d\r\n", val);
     }
     /* 2. 蜂鸣器指令 (例如: BUZZ 1 或 BUZZ 0) */
     else if (strcmp(name, "BUZZ") == 0) 
@@ -147,7 +148,7 @@ static void Show_Help(void)
     printf("\r\n=== Command List ===\r\n");
     printf("1. LED <0-100>    (e.g., LED 50)\r\n");     //LED
     printf("2. MOTOR <0-100>  (e.g., MOTOR 80)\r\n");   //风扇
-    printf("3. MIST <0-100>   (e.g., MIST 60)\r\n");  // 加湿器
+    printf("3. PUMP <0-100>   (e.g., PUMP 60)\r\n");  // 水泵/加湿器
     printf("4. BUZZ <0/1>     (e.g., BUZZ 1)\r\n");   // 蜂鸣器
     printf("5. MODE <0/1>     (0:Auto, 1:Manual)\r\n");
     printf("====================\r\n");
