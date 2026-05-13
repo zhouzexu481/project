@@ -45,3 +45,6 @@
 .\objects\display_task.o: .\system\OLED.h
 .\objects\display_task.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\display_task.o: .\Output\PWM_Motor.h
+.\objects\display_task.o: .\Output\PWM_WaterPump.h
+.\objects\display_task.o: .\Output\PWM_LED.h
+.\objects\display_task.o: .\Output\Buzzer.h

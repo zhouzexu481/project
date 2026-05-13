@@ -4,7 +4,7 @@
 
 /* 引入所有硬件头文件以获取状态 */
 #include "PWM_Motor.h"      // Get_Motor_Speed()
-#include "PWM_PWM_WaterPump.h" // PWM_PWM_WaterPump_GetCurrentDuty()
+#include "PWM_WaterPump.h" // PWM_WaterPump_GetCurrentDuty()
 #include "PWM_LED.h"        // LED_GetBrightness()
 #include "Buzzer.h"         // Buzzer_GetState()
 
@@ -47,7 +47,7 @@ void Display_Task(void *pvParameters)
             sprintf(str_buf, "Hum:%4.1f", data.humidity);
             OLED_ShowString(3, 1, str_buf);
             
-            sprintf(str_buf, "Mis:%3d", PWM_PWM_WaterPump_GetCurrentDuty());
+            sprintf(str_buf, "Mis:%3d", PWM_WaterPump_GetCurrentDuty());
             OLED_ShowString(3, 10, str_buf);
             
             // --- 第四行 ---

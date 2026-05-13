@@ -9,20 +9,20 @@
 #include "AD.h" 
 #include "Buzzer.h"
 #include "PWM_Motor.h"
-#include "PWM_PWM_WaterPump.h"
+#include "PWM_WaterPump.h"
 #include "PWM_LED.h"
 #include "MyI2C1.h"
 #include "MyI2C2.h"
 #include "AHT20.h"
 #include "BH1750.h"
-#include "MQ2.h"    // 【修改点】将 MQ135.h 替换为 MQ2.h
+#include "MQ2.h" 
 
 static void Hardware_Init(void)
 {
     Key_Init();
     Buzzer_Init();
     Motor_Init();
-    PWM_PWM_WaterPump_Init();
+    PWM_WaterPump_Init();
     LED_PWM_Init();
     
 	AD_Init();

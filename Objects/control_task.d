@@ -43,3 +43,6 @@
 .\objects\control_task.o: .\freertos\inc\list.h
 .\objects\control_task.o: .\freertos\inc\semphr.h
 .\objects\control_task.o: .\Output\PWM_Motor.h
+.\objects\control_task.o: .\Output\PWM_WaterPump.h
+.\objects\control_task.o: .\Output\PWM_LED.h
+.\objects\control_task.o: .\Output\Buzzer.h

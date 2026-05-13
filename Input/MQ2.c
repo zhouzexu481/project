@@ -49,8 +49,8 @@ float MQ2_GetData_PPM(void)
     // 样板中的R0校准值
     float R0 = 25.0f;
     
-    // 浓度计算公式 (已替换为MQ2公式)
-    float ppm = pow(11.5428f * R0 / RS, 0.6549f);
+    // 浓度计算公式
+    float ppm = pow(4542.8f * R0 / RS, 0.6549f);
     
     return ppm;
 }
@@ -67,17 +67,4 @@ uint16_t MQ2_GetPPM(void)
     }
     
     return (uint16_t)ppm;
-}
-
-// 获取烟雾等级
-uint8_t MQ2_GetSmokeLevel(void)
-{
-    uint16_t ppm = MQ2_GetPPM();
-    
-    // 简化的分级判断
-    if (ppm < 300) return 1;       // 安全
-    if (ppm < 800) return 2;       // 轻微
-    if (ppm < 1500) return 3;      // 轻度危险
-    if (ppm < 2000) return 4;      // 中度危险
-    return 5;                      // 重度危险
 }

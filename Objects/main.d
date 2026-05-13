@@ -49,3 +49,10 @@
 .\objects\main.o: .\Input\AD.h
 .\objects\main.o: .\Output\Buzzer.h
 .\objects\main.o: .\Output\PWM_Motor.h
+.\objects\main.o: .\Output\PWM_WaterPump.h
+.\objects\main.o: .\Output\PWM_LED.h
+.\objects\main.o: .\Input\MyI2C1.h
+.\objects\main.o: .\Input\MyI2C2.h
+.\objects\main.o: .\Input\AHT20.h
+.\objects\main.o: .\Input\BH1750.h
+.\objects\main.o: .\Input\MQ2.h

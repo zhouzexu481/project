@@ -70,16 +70,26 @@ uint8_t PWM_WaterPump_GetCurrentDuty(void)
 	return current_pump_duty; 
 }
 
-// 自动控制逻辑：根据烟雾浓度开启水泵
-void PWM_WaterPump_AutoControl(float smoke_level)
+// 自动控制逻辑：根据烟雾浓度和湿度综合控制水泵
+void PWM_WaterPump_AutoControl(float smoke_level, float humidity)
 {
-    // 假设烟雾浓度 > 800.0 PPM 时认为是火灾危险，开启水泵灭火
+    // 优先级1：假设烟雾浓度 > 800.0 PPM 时认为是火灾危险
     if(smoke_level > 800.0f)
 	{
-		PWM_WaterPump_SetDutyCycle(100); // 100%全速开启水泵
+		PWM_WaterPump_SetDutyCycle(100); // 100%全速开启水泵灭火降尘
 	}
+    // 优先级2：环境安全，但空气过于干燥（湿度 < 45%）
+    else if(humidity < 45.0f)
+    {
+        PWM_WaterPump_SetDutyCycle(80);  // 开启一半功率进行日常加湿
+    }
+	else if(humidity < 35.0f)
+    {
+        PWM_WaterPump_SetDutyCycle(100);
+    }
+    // 其他情况：环境安全，且湿度适宜
     else 
 	{
-		PWM_WaterPump_Off(); // 安全时关闭水泵
+		PWM_WaterPump_Off(); // 关闭水泵
 	}
 }

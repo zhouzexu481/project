@@ -35,8 +35,8 @@ void Comm_Task(void *pvParameters)
         /* 只有当队列里有数据时才发送，如果没有数据（传感器挂了），这里就不会执行 */
         if(xQueuePeek(TaskManager_GetSensorQueue(), &data, pdMS_TO_TICKS(200)) == pdPASS) 
         {
-            /* 串口1: 调试打印 (保留原有功能) */
-            // 将原来的 A:%3.2f 改为 Smk:%3.2f，读取 data.smoke_level
+            /* 串口1: 调试打印 */
+           
             printf(" T:%3.1fC     H:%3.1f%%     L:%3.0fLux     Smk:%3.2f\r\n",
                    data.temperature, 
                    data.humidity, 
